@@ -1,0 +1,29 @@
+{
+  "name": "sports-junkies",
+  "version": "1.0.0",
+  "main": "server.js",
+  "author": "Daniel S, Andre C, Vo Vu",
+  "license": "MIT",
+  "scripts": {
+    "start": "if-env NODE_ENV=production && yarn run start:prod || yarn run start:dev",
+    "start:prod": "node server.js",
+    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"yarn run client\"",
+    "client": "cd client && yarn run start",
+    "seed": "node scripts/seedDB.js",
+    "install": "cd client && yarn install",
+    "build": "cd client && yarn run build",
+    "heroku-postbuild": "yarn run build"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "if-env": "^1.0.4",
+    "mongoose": "^5.2.0"
+  },
+  "devDependencies": {
+    "concurrently": "^3.6.0",
+    "nodemon": "^1.17.5"
+  }
+}

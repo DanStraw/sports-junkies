@@ -1,0 +1,58 @@
+body{
+    background-image: url("/assets/login-background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    overflow-y: scroll;
+    width: 100%;
+    height: 100%;
+    filter: blur(0px);
+}
+.login-page{
+    width: 100%;
+    padding: 10% 0 0;
+    margin: auto;
+    
+}
+.form{
+    position: relative;
+    z-index: 1;
+    background: rgba(94, 92, 92, 0.6);
+    max-width: 360px;
+    margin: 0 auto 100px;
+    padding: 45px;
+    text-align: center;
+    color: white
+}
+.form input{
+    font-family: "Roboto", sans-serif;
+    outline: 1px;
+    background-color: transparent;
+    border: 1px solid white;
+    width: 100%;
+    margin: 0 0 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+    color: rgb(228, 222, 222);
+}
+.form button{
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    background: rgb(152, 212, 154);
+    width: 100%;
+    border: 0;
+    padding: 15px;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+}
+.form button:hover{
+    background: #43A047;
+}
+
+h2{
+    color: white;
+    font-style: initial;
+}
