@@ -5,7 +5,7 @@ const routes = require("./routes");
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/sportsJunkies");
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/sports-junkies");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

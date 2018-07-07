@@ -3,6 +3,7 @@ const axios = require("axios");
 require('dotenv').config();
 // const keys = require("../keys.js");
 const cheerio = require("cheerio");
+const apiRoutes = require("./api");
 
 router
     .get("/scrapeTopBets", (req,res,next)=> {
@@ -102,6 +103,7 @@ router
             res.send(oddsInfo)
         })
     })
+router.use("/api", apiRoutes);
 
 router.get((req,res,next)=>{
   res.sendStatus(404)})

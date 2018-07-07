@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './login.css';
 import Navbar from '../../components/Navbar.js';
+import API from '../../utils/API';
 
 class Login extends Component {
     state = {
@@ -20,6 +21,17 @@ class Login extends Component {
             [name]: value
         });
     };
+    handleFormSubmit = event => {
+        event.preventDefault();
+        API.saveUser({
+            username: this.state.username,
+            password: this.state.contact,
+            email: this.state.contact
+        })
+        .then(res => console.log('saved user:', res))
+        .catch(err => console.log(err));
+    }
+
     render() {
         return (
          <div>
@@ -27,7 +39,7 @@ class Login extends Component {
                 {this.state.username}
                 {this.state.password}
                 {this.state.contact}
-                <form className="login-page">
+                <form onSubmit={this.handleFormSubmit} className="login-page">
                     <div className="form">
                         <input
                             type="text"

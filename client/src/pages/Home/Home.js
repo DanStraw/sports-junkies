@@ -90,7 +90,9 @@ class Home extends Component {
                                         </div>
                                     </Cell>
                                     )
-                                }   
+                                } else {
+                                    return false;
+                                }
                             })
                             }
                         </Grid>
@@ -126,7 +128,7 @@ class Home extends Component {
                                 {this.state.seasonOdds.map((team, index) => {
                                     switch(index) {
                                         case 0:
-                                            break;
+                                            return false;
                                         default:
                                             return (
                                                 <Cell col={2} key={team.key}>

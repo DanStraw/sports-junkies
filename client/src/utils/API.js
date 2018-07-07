@@ -8,7 +8,9 @@ export default {
         return axios.get("/scrapeMLB")
     },
     getSeasonOdds: function(league) {
-        console.log('league:', league)
         return axios.get("/seasonOdds/" + league)
+    },
+    saveUser: function(userData) {
+        return axios.post("/api/users/", userData);
     }
 }

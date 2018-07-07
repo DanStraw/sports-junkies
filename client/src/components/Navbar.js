@@ -1,5 +1,5 @@
 // import './login.js';
-import { Layout, Header, Navigation, Drawer, Content } from 'react-mdl';
+import { Header, Navigation, Drawer, Content } from 'react-mdl';
 import React from 'react';
 import { Link } from 'react-router-dom';
 // style={{ backgroundColor: '#194d33' }}
