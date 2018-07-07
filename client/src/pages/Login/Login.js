@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import './login.css';
 import Navbar from '../../components/Navbar.js';
 
@@ -44,7 +45,7 @@ class Login extends Component {
                             placeholder="Email or Phone Number"
                             onChange={this.handleInputChange} />
                         <button>Create</button>
-                        <p className="message">Already Registered? <a href="#">Login</a></p>
+                        <p className="message">Already Registered?<Link to="/login">Login</Link></p>
                     </div>
                 </form>
             </div>

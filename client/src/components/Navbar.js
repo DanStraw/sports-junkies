@@ -7,25 +7,23 @@ import { Link } from 'react-router-dom';
 const Navbar = () => (
 
     <div id ="myNav">
-        <Layout fixedHeader>
             <Header className="header-color" title={<span><span > </span><strong>Sports Junkies</strong></span>}>
                 <Navigation>
                     <Link to="/home">Home</Link>
-                    <a href="#">Dashboard</a>
-                    <a href="#">Contact</a>
-                    <a href="#">Login</a>
+                    <Link to="/Saved">Dashboard</Link>
+                    <Link to="/contact">Contact</Link>
+                    <Link to="/login">login</Link>
                 </Navigation>
             </Header>
             <Drawer title="Sports Junkies">
                 <Navigation>
-                    <a href="#">Home</a>
-                    <a href="#">Dashboard</a>
-                    <a href="#">Contact</a>
-                    <a href="#">Login</a>
+                    <Link to="/home">Home</Link>
+                    <Link to="/Saved">Dashboard</Link>
+                    <Link to="/contact">Contact</Link>
+                    <Link to="/login">login</Link>
                 </Navigation>
             </Drawer>
             <Content />
-        </Layout>
     </div>
 
 )

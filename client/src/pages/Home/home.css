@@ -1,0 +1,37 @@
+.betDiv {
+    background-color: #dfffdf;
+}
+
+.grid {
+    position: relative;
+    top: 60px;
+    color: white;
+}
+
+.main-display {
+    position: relative;
+    top: 100px;
+}
+
+.betDiv {
+    position: relative;
+    float: left;
+    width: 20vw;
+}
+
+.demo-grid-1 {
+    text-align: center;
+}
+
+.text-button {
+    position: absolute;
+    top: 300px;
+}
+h4 {
+    color: white;
+    text-align: center;
+}
+
+label {
+    color: white;
+}
