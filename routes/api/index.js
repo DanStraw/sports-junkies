@@ -1,7 +1,10 @@
 const router = require("express").Router();
-const userRoutes = require("./users");
-const betRoutes = require("./bets");
+const userController = require("../../controllers/usersController.js")
 
-router.use("/users", userRoutes);
+router
+    .post("/users", (req, res,next) => {
+        console.log(req.body)
+        userController.create(req.body)
+})
 
 module.exports = router;

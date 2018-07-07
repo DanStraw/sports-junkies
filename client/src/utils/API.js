@@ -11,6 +11,6 @@ export default {
         return axios.get("/seasonOdds/" + league)
     },
     saveUser: function(userData) {
-        return axios.post("/api/users/", userData);
+        return axios.post("/api/users", userData);
     }
 }

@@ -5,6 +5,7 @@ module.exports = {
         db.User.find({}).exec(cb)
     },
     create: function(req, res) {
+        console.log('controller:', req)
         db.User.collection
             .insert(req)
             .then(dbModel => res.json(dbModel))
