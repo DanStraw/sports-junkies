@@ -10,7 +10,8 @@ const Navbar = () => (
             <Header className="header-color" title={<span><span > </span><strong>Sports Junkies</strong></span>}>
                 <Navigation>
                     <Link to="/home">Home</Link>
-                    <Link to="/Saved">Dashboard</Link>
+                    <Link to="/Saved">My Tracked Bets</Link>
+                    <Link to="/social">Get Informed</Link>
                     <Link to="/contact">Contact</Link>
                     <Link to="/login">login</Link>
                 </Navigation>
@@ -19,8 +20,10 @@ const Navbar = () => (
                 <Navigation>
                     <Link to="/home">Home</Link>
                     <Link to="/Saved">Dashboard</Link>
+                    <Link to="/social">Get Informed</Link>
                     <Link to="/contact">Contact</Link>
                     <Link to="/login">login</Link>
+                    
                 </Navigation>
             </Drawer>
             <Content />

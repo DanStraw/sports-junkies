@@ -1,7 +1,15 @@
 const router = require("express").Router();
-const userRoutes = require("./users");
-const betRoutes = require("./bets");
+const userController = require("../../controllers/usersController.js")
 
-router.use("/users", userRoutes);
+router
+    .post("/users", (req,res,next) => {
+        userController.create(req.body, res)
+    })
+    .delete("/users/:id", (req,res,next) => {
+        userController.remove(req)
+    })
+    .get("/users/:id", (res,res,next) => {
+        userController.findById(req)
+    })
 
 module.exports = router;

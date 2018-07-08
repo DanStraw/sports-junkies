@@ -5,10 +5,10 @@ module.exports = {
         db.User.find({}).exec(cb)
     },
     create: function(req, res) {
-        db.User.collection
-            .insert(req)
-            .then(dbModel => res.json(dbModel))
-            .catch(err => res.status(422).json(err))
+        db.User
+            .create(req)
+            .then(dbModel =>res.json(dbModel))
+            .catch(err=>res.status(500).json(err))
     },
     findById: function(req, res) {
         db.User
@@ -17,7 +17,6 @@ module.exports = {
           .catch(err => res.status(422).json(err));
     },
     remove: function(req, res) {
-        console.log(req.params)
         db.User 
             .findById({ _id: req.params.id })
             .then(dbModel => dbModel.remove())
