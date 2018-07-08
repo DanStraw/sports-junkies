@@ -4,7 +4,6 @@ import API from '../../utils/API';
 import { Grid, Cell, Button } from 'react-mdl';
 import './home.css';
 
-
 class Home extends Component {
     constructor(props) {
         super(props)
