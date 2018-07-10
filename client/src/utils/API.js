@@ -15,5 +15,8 @@ export default {
     },
     saveBet: function(betData) {
         return axios.post("/api/bets", betData)
+    },
+    getTweets: function(account) {
+        return axios.get("/tweets/" + account)
     }
 }

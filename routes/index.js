@@ -1,7 +1,9 @@
 const router = require("express").Router();
 const axios = require("axios");
 require('dotenv').config();
-// const keys = require("../keys.js");
+const keys = require("../keys.js");
+var Twitter = require('twitter')
+var client = new Twitter(keys.twitter);
 const cheerio = require("cheerio");
 const apiRoutes = require("./api");
 
@@ -17,16 +19,17 @@ router
             })
             const bets = []
             for (let i = 0; i < results.length; i += 8) {
+                let key = results[i + 2] + results[i + 3] + results[i + 4];
+                key = key.split(" ")
+                key = key.join("")
                 const bet = {
                     rank: results[i],
                     league: results[i + 1],
                     rotation: results[i + 2],
                     team: results[i + 3],
                     type: results[i + 4],
-                    betOnlineCurrentLine: results[i + 5],
-                    ceasarsCurrentLine: results[i + 6],
                     lvhCurrentLine: results[i + 7],
-                    key: Math.floor(Math.random() * 100000000000)
+                    key: key
                 }
                 bets.push(bet)
             }
@@ -35,7 +38,7 @@ router
     })
     .get("/scrapeMLB", function(req,res) {
         const games = [];
-        axios.get("http://www.vegasinsider.com/mlb/scoreboard/scores.cfm/game_date/" + req.date).then(function(response) {
+        axios.get("http://www.vegasinsider.com/mlb/scoreboard/").then(function(response) {
             const $ = cheerio.load(response.data);
             const gameTable = $("tbody")
             const oddsInfo = [];
@@ -64,6 +67,14 @@ router
                     oddsInfo.push(teamData);
                 })
             })
+            const currentTime = new Date()
+            console.log(currentTime)
+            const day = currentTime.getDay()
+            console.log(day)
+            const month = currentTime.getMonth()
+            console.log(month)
+            const year = currentTime.getFullYear()
+            console.log(day, month, year)
             for (i = 0; i < oddsInfo.length; i+=2) {
                 games.push({
                     team1: oddsInfo[i],
@@ -88,7 +99,6 @@ router
                         break;
                 }    
             })
-            
             const teamRows = $("table.table-wrapper").children("tbody").children("tr.viCellBg1, tr.viCellBg2")
             teamRows.each(function(i, element) {
                 if (i <= 31) {
@@ -101,6 +111,46 @@ router
                 }  
             })
             res.send(oddsInfo)
+        })
+    })
+    .get("/tweets/:account", function(req,res,next) {
+        var params = {screen_name: req.params.account};
+        client.get('statuses/user_timeline', params, function(error, tweets, response) {
+            if (error) {
+                console.log('error:', error);
+                throw error;
+            }
+            if (!error) {
+                twits = [];
+                for (let i = 0; i < 5; i++) {
+                    let listing = i + 1;
+                    const t = tweets[i];
+                    let twit = {};
+                    switch (t.entities.media) {
+                        case undefined:
+                            twit = {
+                                number: listing,
+                                account: '@' + t.user.screen_name,
+                                text: t.text,
+                                created: t.created_at,
+                            }
+                            break;
+                        default:
+                            twit = {
+                                number: listing,
+                                account: '@' + t.user.screen_name,
+                                avatar: t.user.profile_image_url,
+                                text: t.text,
+                                created: t.created_at,
+                                image: t.entities.media[0].media_url
+                            }
+                        break;
+                    }
+                    twits.push(twit)
+                }
+                res.send(twits);
+            }
+            
         })
     })
 router.use("/api", apiRoutes);

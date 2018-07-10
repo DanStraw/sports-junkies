@@ -115,6 +115,7 @@ class Home extends Component {
                                             <li>{mbet.team2.team}</li>
                                             <li>{mbet.team2.moneyLine}</li>
                                         </ul>
+                                        <button onClick={() => this.saveBet(mbet)}>Save Bet</button>
                                     </div>
                                 </Cell>    
                             ))}
