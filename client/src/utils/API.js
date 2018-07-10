@@ -12,5 +12,11 @@ export default {
     },
     saveUser: function(userData) {
         return axios.post("/api/users", userData);
+    },
+    saveBet: function(betData) {
+        return axios.post("/api/bets", betData)
+    },
+    getTweets: function(account) {
+        return axios.get("/tweets/" + account)
     }
 }
