@@ -35,7 +35,7 @@ router
     })
     .get("/scrapeMLB", function(req,res) {
         const games = [];
-        axios.get("http://www.vegasinsider.com/mlb/scoreboard/").then(function(response) {
+        axios.get("http://www.vegasinsider.com/mlb/scoreboard/scores.cfm/game_date/" + req.date).then(function(response) {
             const $ = cheerio.load(response.data);
             const gameTable = $("tbody")
             const oddsInfo = [];

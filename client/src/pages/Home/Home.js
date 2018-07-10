@@ -46,9 +46,11 @@ class Home extends Component {
         this.getSeasonOdds(event.target.value)
         
     }
-
     componentDidUpdate() {
         console.log(this.state.header)
+    }
+    saveBet = betData => {
+        console.log(betData)
     }
 
     render() {
@@ -87,6 +89,7 @@ class Home extends Component {
                                                 <li>{bet.type}</li>
                                             </ul>
                                         </div>
+                                        <button onClick={() => this.saveBet(bet)}>Save Bet</button>
                                     </Cell>
                                     )
                                 } else {
