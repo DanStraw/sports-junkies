@@ -7,10 +7,15 @@ import API from '../../utils/API';
 import { List } from 'react-mdl';
 
 class Social extends Component {
-    state = {
-        account: 'billsimmons',
-        tweets: [],
-        
+    constructor(props) {
+        super(props);
+        this.state = {
+            search: '',
+            news: props.newsArticles,
+            account: 'billsimmons',
+            tweets: [],
+            articles: []
+        };
     }
     componentDidMount() {
         this.displaytweets(this.state.account)
@@ -29,14 +34,54 @@ class Social extends Component {
         this.displaytweets(event.target.value)
     }
 
+    updateSearch(event) {
+        this.setState({search: event.target.value});
+    }
+
+    handleFormSubmit() {
+        API.getArticles(this.state.search)
+    }
+
+    addContact(event) {
+        event.preventDefault();
+        console.log(this);
+    }
+
     render() {
-        const experts = ["billsimmons", "notthefakeSVP", "darrenrovell", "ColinCowherd", "VegasPointBlank", "kellyinvegas", "ESPNStatsInfo"]
+        const experts = ["billsimmons", "notthefakeSVP", "darrenrovell", "ColinCowherd", "VegasPointBlank", "kellyinvegas", "ESPNStatsInfo"];
+        let filteredArticles = this.state.articles.filter(
+            (articles) => {
+                return articles.name.toLowerCase().indexOf(this.state.search)
+            } 
+        )
+       
         return (
-            <div>
-                <Navbar />
+            
+
+            <div>  
+              <Navbar />
                 <br />
                 <Grid className="demo-grid-3">
-                    <Cell col={6} tablet={6}>Sports Articles</Cell>
+                    <Cell col={6} tablet={6}>
+                        <div>
+                        <h3>Sports Articles</h3>
+                            <div>
+                                <input type="text"
+                                    placeholder="Search"
+                                    value={this.state.search}
+                                    onChange={this.updateSearch.bind(this)}/>
+                                <form onSubmit={this.handleFormSubmit.bind(this)}>
+                                    <input type="text" ref="sports articles" />
+                                    <button className="btn btn-default">Search News Articles</button>
+                                </form>
+                                {/* <ul>
+                                    {filteredNews.map((news)=> {
+                                    return <News articles={articles} key={articles.id}/>               
+                                    })}
+                                </ul>*/}
+                            </div>
+                        </div>
+                    </Cell>
                     <Cell col={6} tablet={6}>
                         <div>
                             <h3>Sports Tweets</h3>
