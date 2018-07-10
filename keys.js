@@ -4,3 +4,8 @@ exports.twitter = {
     access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
     access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
 };
+
+exports.foxnews = {
+    id: process.env.FOXNEWS_ID,
+    
+};
