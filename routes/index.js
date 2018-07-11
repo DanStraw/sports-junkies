@@ -21,8 +21,10 @@ router
             const bets = []
             for (let i = 0; i < results.length; i += 8) {
                 let key = results[i + 2] + results[i + 3] + results[i + 4];
-                key = key.split(" ")
-                key = key.join("")
+                key = key.split(" ");
+                key = key.join("");
+                key = key.split(".");
+                key = key.join("");
                 const bet = {
                     rank: results[i],
                     league: results[i + 1],
@@ -59,14 +61,14 @@ router
                             default:
                                 data.push(info)
                                 break;
-                        }
-                        
+                        }     
                     })
                     teamData.moneyLine = data[2];
                     teamData.overUnder = data[3];
                     oddsInfo.push(teamData);
                 })
             })
+            const currentDate = moment().format("YYYYMMDD");
             for (i = 0; i < oddsInfo.length; i+=2) {
                 const currentDate = moment().format("YYYYMMDD")
                 let key = currentDate + oddsInfo[i].team + "vs" + oddsInfo[i + 1].team;
@@ -80,6 +82,7 @@ router
                     key: key
                 })
             }
+            console.log(games)
             res.send(games)
         })
     })
@@ -100,10 +103,12 @@ router
             const teamRows = $("table.table-wrapper").children("tbody").children("tr.viCellBg1, tr.viCellBg2")
             teamRows.each(function(i, element) {
                 if (i <= 31) {
-                    let key = $(this).children("td.font-bold").text() + oddsInfo[0]
+                    let key = $(this).children("td.font-bold").text() + oddsInfo[0];
                     key = key.split(" ");
-                    key = key.join("")
-                    key = key.slice(0, key.length - 8)
+                    key = key.join("");
+                    key = key.split(".");
+                    key = key.join("");
+                    key= key.slice(0, key.length - 8)
                     const team = {
                         name: $(this).children("td.font-bold").text(),
                         odds: $(this).children("td.last").text(),
@@ -115,7 +120,6 @@ router
             res.send(oddsInfo)
         })
     })
-
     .get("/tweets/:account", function(req,res,next) {
         var params = {screen_name: req.params.account};
         client.get('statuses/user_timeline', params, function(error, tweets, response) {
@@ -151,6 +155,7 @@ router
                     }
                     twits.push(twit)
                 }
+                console.log(twits)
                 res.send(twits);
             }
             

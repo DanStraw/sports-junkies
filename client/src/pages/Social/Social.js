@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Grid, Cell } from 'react-mdl';
+import { Grid, Cell, List } from 'react-mdl';
 import Navbar from '../../components/Navbar';
 import './social.css';
 import Twit from '../../components/Twit.js';
 import API from '../../utils/API';
-import { List } from 'react-mdl';
+import Articles from '../../components/Articles.js';
 
 class Social extends Component {
     constructor(props) {
@@ -12,7 +12,7 @@ class Social extends Component {
         this.state = {
             search: '',
             news: props.newsArticles,
-            account: 'billsimmons',
+            account: '',
             tweets: [],
             articles: []
         };
@@ -39,7 +39,8 @@ class Social extends Component {
     }
 
     handleFormSubmit() {
-        API.getArticles(this.state.search)
+        console.log('ehhlo')
+        // API.getArticles(this.state.search)
     }
 
     addContact(event) {
@@ -49,15 +50,13 @@ class Social extends Component {
 
     render() {
         const experts = ["billsimmons", "notthefakeSVP", "darrenrovell", "ColinCowherd", "VegasPointBlank", "kellyinvegas", "ESPNStatsInfo"];
-        let filteredArticles = this.state.articles.filter(
-            (articles) => {
-                return articles.name.toLowerCase().indexOf(this.state.search)
-            } 
-        )
+        // let filteredArticles = this.state.articles.filter(
+        //     (articles) => {
+        //         return articles.name.toLowerCase().indexOf(this.state.search)
+        //     } 
+        // )
        
         return (
-            
-
             <div>  
               <Navbar />
                 <br />
@@ -86,7 +85,7 @@ class Social extends Component {
                         <div>
                             <h3>Sports Tweets</h3>
                             <select onChange={this.handleSelectChange} value={this.state.account}>
-                                <option disabled selected value="">Select an Expert</option>
+                                <option selected value="">Select an Expert</option>
                                 {experts.map(expert => {
                                     return <option value={expert}>{expert}</option>
                                 })}

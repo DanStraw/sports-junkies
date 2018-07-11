@@ -84,6 +84,7 @@ class Home extends Component {
                                                 <li>{bet.team}</li>
                                                 <li>{bet.type}</li>
                                             </ul>
+                                            <button onClick={() => this.saveBet(bet)}>Save Bet</button>
                                         </div>
                                         <button onClick={() => this.saveBet(bet)}>Save Bet</button>
                                     </Cell>
@@ -106,10 +107,10 @@ class Home extends Component {
                                     <div className="betDiv">
                                         <ul>
                                             <li>{mbet.team1.team}</li>
-                                            <li>{mbet.team1.moneyLine}</li>
-                                            <li>{mbet.team1.overUnder}</li>
+                                            <li>{mbet.team1.team} MoneyLine: {mbet.team1.moneyLine}</li>
                                             <li>{mbet.team2.team}</li>
-                                            <li>{mbet.team2.moneyLine}</li>
+                                            <li>{mbet.team2.team} MoneyLine: {mbet.team2.moneyLine}</li>
+                                            <li>OverUnder: {mbet.team1.overUnder}</li>
                                         </ul>
                                         <button onClick={() => this.saveBet(mbet)}>Save Bet</button>
                                     </div>
@@ -136,6 +137,7 @@ class Home extends Component {
                                                             <li>{team.name}</li>
                                                             <li>{team.odds}</li>
                                                         </ul>
+                                                        <button onClick={() => this.saveBet(team)}>Save Bet</button>
                                                     </div>
                                                 </Cell>    
                                             )
