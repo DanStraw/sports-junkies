@@ -8,3 +8,4 @@ exports.twitter = {
 exports.foxnews = {
     id: process.env.FOXNEWS_ID
 }
+

@@ -5,6 +5,7 @@ import './social.css';
 import Twit from '../../components/Twit.js';
 import API from '../../utils/API';
 import { List } from 'react-mdl';
+import Artices from '../../components/Articles.js';
 
 class Social extends Component {
     constructor(props) {
