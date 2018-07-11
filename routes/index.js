@@ -6,6 +6,7 @@ var Twitter = require('twitter')
 var client = new Twitter(keys.twitter);
 const cheerio = require("cheerio");
 const apiRoutes = require("./api");
+const moment = require("moment");
 
 router
     .get("/scrapeTopBets", (req,res,next)=> {
@@ -52,7 +53,6 @@ router
                     const stat = $(this).children("td.sportPicksBorderL2, td.sportPicksBorderL")
                     stat.each(function(i, element) {
                         const info = $(this).text()
-                        const infoArray = info.split("");
                         switch (info) {
                             case "" :
                                 break;
@@ -67,19 +67,17 @@ router
                     oddsInfo.push(teamData);
                 })
             })
-            const currentTime = new Date()
-            console.log(currentTime)
-            const day = currentTime.getDay()
-            console.log(day)
-            const month = currentTime.getMonth()
-            console.log(month)
-            const year = currentTime.getFullYear()
-            console.log(day, month, year)
             for (i = 0; i < oddsInfo.length; i+=2) {
+                const currentDate = moment().format("YYYYMMDD")
+                let key = currentDate + oddsInfo[i].team + "vs" + oddsInfo[i + 1].team;
+                key = key.split(" ")
+                key = key.join("")
+                key = key.split(".")
+                key = key.join("")
                 games.push({
                     team1: oddsInfo[i],
                     team2: oddsInfo[i + 1],
-                    key: Math.floor(Math.random() * 100000000000)
+                    key: key
                 })
             }
             res.send(games)
@@ -102,10 +100,14 @@ router
             const teamRows = $("table.table-wrapper").children("tbody").children("tr.viCellBg1, tr.viCellBg2")
             teamRows.each(function(i, element) {
                 if (i <= 31) {
+                    let key = $(this).children("td.font-bold").text() + oddsInfo[0]
+                    key = key.split(" ");
+                    key = key.join("")
+                    key = key.slice(0, key.length - 8)
                     const team = {
                         name: $(this).children("td.font-bold").text(),
                         odds: $(this).children("td.last").text(),
-                        key: Math.floor(Math.random() * 100000000000)
+                        key: key
                     }
                     oddsInfo.push(team);
                 }  
@@ -113,6 +115,7 @@ router
             res.send(oddsInfo)
         })
     })
+
     .get("/tweets/:account", function(req,res,next) {
         var params = {screen_name: req.params.account};
         client.get('statuses/user_timeline', params, function(error, tweets, response) {
