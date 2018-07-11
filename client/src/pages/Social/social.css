@@ -2,3 +2,9 @@
     color: white;
     text-align: center;
 }
+
+.tweet {
+    background-color: #6f2929;
+    opacity: 0.9;
+    height: auto;
+}

@@ -1,9 +1,12 @@
 const router = require("express").Router();
 const axios = require("axios");
 require('dotenv').config();
-// const keys = require("../keys.js");
+const keys = require("../keys.js");
+const Twitter = require('twitter')
+const client = new Twitter(keys.twitter);
 const cheerio = require("cheerio");
 const apiRoutes = require("./api");
+const moment = require('moment');
 
 router
     .get("/scrapeTopBets", (req,res,next)=> {
@@ -17,6 +20,11 @@ router
             })
             const bets = []
             for (let i = 0; i < results.length; i += 8) {
+                let key = results[i + 2] + results[i + 3] + results[i + 4];
+                key = key.split(" ");
+                key = key.join("");
+                key = key.split(".");
+                key = key.join("");
                 const bet = {
                     rank: results[i],
                     league: results[i + 1],
@@ -26,7 +34,7 @@ router
                     betOnlineCurrentLine: results[i + 5],
                     ceasarsCurrentLine: results[i + 6],
                     lvhCurrentLine: results[i + 7],
-                    key: Math.floor(Math.random() * 100000000000)
+                    key: key
                 }
                 bets.push(bet)
             }
@@ -56,21 +64,27 @@ router
                             default:
                                 data.push(info)
                                 break;
-                        }
-                        
+                        }     
                     })
                     teamData.moneyLine = data[2];
                     teamData.overUnder = data[3];
                     oddsInfo.push(teamData);
                 })
             })
+            const currentDate = moment().format("YYYYMMDD");
             for (i = 0; i < oddsInfo.length; i+=2) {
+                let key = currentDate + oddsInfo[i].team + oddsInfo[i + 1].team
+                key = key.split(" ");
+                key = key.join("");
+                key = key.split(".");
+                key = key.join("");
                 games.push({
                     team1: oddsInfo[i],
                     team2: oddsInfo[i + 1],
-                    key: Math.floor(Math.random() * 100000000000)
+                    key: key
                 })
             }
+            console.log(games)
             res.send(games)
         })
     })
@@ -92,15 +106,61 @@ router
             const teamRows = $("table.table-wrapper").children("tbody").children("tr.viCellBg1, tr.viCellBg2")
             teamRows.each(function(i, element) {
                 if (i <= 31) {
+                    let key = $(this).children("td.font-bold").text() + oddsInfo[0];
+                    key = key.split(" ");
+                    key = key.join("");
+                    key = key.split(".");
+                    key = key.join("");
+                    key= key.slice(0, key.length - 8)
                     const team = {
                         name: $(this).children("td.font-bold").text(),
                         odds: $(this).children("td.last").text(),
-                        key: Math.floor(Math.random() * 100000000000)
+                        key: key
                     }
                     oddsInfo.push(team);
                 }  
             })
             res.send(oddsInfo)
+        })
+    })
+    .get("/tweets/:account", function(req,res,next) {
+        var params = {screen_name: req.params.account};
+        client.get('statuses/user_timeline', params, function(error, tweets, response) {
+            if (error) {
+                console.log('error:', error);
+                throw error;
+            }
+            if (!error) {
+                twits = [];
+                for (let i = 0; i < 5; i++) {
+                    let listing = i + 1;
+                    const t = tweets[i];
+                    let twit = {};
+                    switch (t.entities.media) {
+                        case undefined:
+                            twit = {
+                                number: listing,
+                                account: '@' + t.user.screen_name,
+                                text: t.text,
+                                created: t.created_at,
+                            }
+                            break;
+                        default:
+                            twit = {
+                                number: listing,
+                                account: '@' + t.user.screen_name,
+                                avatar: t.user.profile_image_url,
+                                text: t.text,
+                                created: t.created_at,
+                                image: t.entities.media[0].media_url
+                            }
+                        break;
+                    }
+                    twits.push(twit)
+                }
+                res.send(twits);
+            }
+            
         })
     })
 router.use("/api", apiRoutes);

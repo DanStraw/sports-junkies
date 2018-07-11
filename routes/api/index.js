@@ -8,7 +8,7 @@ router
     .delete("/users/:id", (req,res,next) => {
         userController.remove(req)
     })
-    .get("/users/:id", (res,res,next) => {
+    .get("/users/:id", (req,res,next) => {
         userController.findById(req)
     })
 
