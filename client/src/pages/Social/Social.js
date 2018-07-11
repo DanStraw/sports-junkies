@@ -4,6 +4,7 @@ import Navbar from '../../components/Navbar';
 import './social.css';
 import Twit from '../../components/Twit.js';
 import API from '../../utils/API';
+import Articles from '../../components/Articles.js';
 
 class Social extends Component {
     constructor(props) {
@@ -89,9 +90,9 @@ class Social extends Component {
                                     return <option value={expert}>{expert}</option>
                                 })}
                             </select>
-                            <List style={{width: '650px'}}>
+                            <List style={{width: '650px', background: 'url("/assets/twitter.png")'}}>
                                 {this.state.tweets.map(tweet => {
-                                    return <div className="tweet" key={tweet.number}><Twit user={tweet.account} avatar={tweet.avatar} text={tweet.text} created={tweet.created} /></div>
+                                    return <div className="tweet"><Twit user={tweet.account} avatar={tweet.avatar} text={tweet.text} created={tweet.created} /></div>
                                 })
 
                                 }

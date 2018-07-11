@@ -41,15 +41,13 @@ class Home extends Component {
                 this.setState({ bets: [], mlbBets: [], seasonOdds: res.data, header: res.data[0] })
             })
             .catch(err=>console.log(err))
-    }
+    };
     handleSelectChange(event) {
-        this.getSeasonOdds(event.target.value)
-        
-    }
-
-    componentDidUpdate() {
-        console.log(this.state.header)
-    }
+        this.getSeasonOdds(event.target.value)  
+    };
+    saveBet = betData => {
+        console.log(betData)
+    };
 
     render() {
         return (
@@ -88,6 +86,7 @@ class Home extends Component {
                                             </ul>
                                             <button onClick={() => this.saveBet(bet)}>Save Bet</button>
                                         </div>
+                                        <button onClick={() => this.saveBet(bet)}>Save Bet</button>
                                     </Cell>
                                     )
                                 } else {
