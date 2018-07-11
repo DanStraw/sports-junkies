@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import { Card, CardText, ListItem, ListItemContent } from 'react-mdl';
+import { ListItem, ListItemContent } from 'react-mdl';
 
 class Twit extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return(
