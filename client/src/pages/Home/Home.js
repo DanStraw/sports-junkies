@@ -3,6 +3,9 @@ import Navbar from '../../components/Navbar.js';
 import API from '../../utils/API';
 import { Grid, Cell, Button } from 'react-mdl';
 import './home.css';
+import TopBetDiv from '../../components/TopBetDiv';
+import MlbBetDiv from '../../components/MlbBetDiv.js';
+import SeasonBetDiv from '../../components/SeasonBetDiv.js';
 
 class Home extends Component {
     constructor(props) {
@@ -17,6 +20,7 @@ class Home extends Component {
         this.getMlbGames = this.getMlbGames.bind(this)
         this.getSeasonOdds = this.getSeasonOdds.bind(this)
         this.handleSelectChange = this.handleSelectChange.bind(this)
+        this.saveBet = this.saveBet.bind(this)
     }
     componentDidMount() {
         this.getTopBets()
@@ -24,7 +28,7 @@ class Home extends Component {
     getTopBets() {
         API.getTrendingBets()
             .then(res=> {
-                this.setState({ bets: res.data, mlbBets: [], seasonOdds: [], header: 'Top Trending Bets' })
+                this.setState({ bets: res.data, mlbBets: [], seasonOdds: [], header: 'Most Popular Teams' })
             })
             .catch(err=>console.log(err));
     };
@@ -75,18 +79,13 @@ class Home extends Component {
                             {this.state.bets.map((bet, index)=> {
                                 if (index <= 9) {
                                     return (
-                                    <Cell col={4} key={bet.key}>
-                                        <div className="betDiv">
-                                            <ul>
-                                                <li>{bet.rank}</li>
-                                                <li>{bet.league}</li>
-                                                <li>{bet.lvhCurrentLine}</li>
-                                                <li>{bet.team}</li>
-                                                <li>{bet.type}</li>
-                                            </ul>
-                                            <button onClick={() => this.saveBet(bet)}>Save Bet</button>
-                                        </div>
-                                        <button onClick={() => this.saveBet(bet)}>Save Bet</button>
+                                    <Cell col={4} key={bet.key}>                                     
+                                        <TopBetDiv saveClickHandler={() => this.saveBet(bet)} 
+                                            rank={bet.rank} 
+                                            league={bet.league}
+                                            line={bet.lvhCurrentLine}
+                                            team={bet.team}
+                                            type={bet.type}/>
                                     </Cell>
                                     )
                                 } else {
@@ -104,16 +103,13 @@ class Home extends Component {
                         <Grid className="demo-grid-2">
                             {this.state.mlbBets.map(mbet => (
                                 <Cell col={3} key={mbet.key}>
-                                    <div className="betDiv">
-                                        <ul>
-                                            <li>{mbet.team1.team}</li>
-                                            <li>{mbet.team1.team} MoneyLine: {mbet.team1.moneyLine}</li>
-                                            <li>{mbet.team2.team}</li>
-                                            <li>{mbet.team2.team} MoneyLine: {mbet.team2.moneyLine}</li>
-                                            <li>OverUnder: {mbet.team1.overUnder}</li>
-                                        </ul>
-                                        <button onClick={() => this.saveBet(mbet)}>Save Bet</button>
-                                    </div>
+                                    <MlbBetDiv saveClickHandler={() => this.saveBet(mbet)}
+                                        team1={mbet.team1.team}
+                                        team2={mbet.team2.team}
+                                        t1MoneyLine={mbet.team1.moneyLine}
+                                        t2MoneyLine={mbet.team2.moneyLine}
+                                        overUnder={mbet.team1.overUnder}
+                                    />
                                 </Cell>    
                             ))}
                         </Grid>
@@ -132,13 +128,11 @@ class Home extends Component {
                                         default:
                                             return (
                                                 <Cell col={2} key={team.key}>
-                                                    <div className="betDiv">
-                                                        <ul>
-                                                            <li>{team.name}</li>
-                                                            <li>{team.odds}</li>
-                                                        </ul>
-                                                        <button onClick={() => this.saveBet(team)}>Save Bet</button>
-                                                    </div>
+                                                    <SeasonBetDiv saveClickHandler={() => this.saveBet(team)}
+                                                        team={team.name}
+                                                        rank={index}
+                                                        odds={team.odds}
+                                                    />
                                                 </Cell>    
                                             )
                                         }

@@ -1,5 +1,6 @@
-.betDiv {
-    background-color: #dfffdf;
+.bet-div {
+    background-color: #6f2929;
+    opacity: 0.9;
 }
 
 .grid {
@@ -13,11 +14,7 @@
     top: 100px;
 }
 
-.betDiv {
-    position: relative;
-    float: left;
-    width: 20vw;
-}
+
 
 .demo-grid-1 {
     text-align: center;

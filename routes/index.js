@@ -68,7 +68,6 @@ router
                     oddsInfo.push(teamData);
                 })
             })
-            const currentDate = moment().format("YYYYMMDD");
             for (i = 0; i < oddsInfo.length; i+=2) {
                 const currentDate = moment().format("YYYYMMDD")
                 let key = currentDate + oddsInfo[i].team + "vs" + oddsInfo[i + 1].team;
