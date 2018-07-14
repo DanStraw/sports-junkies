@@ -49,6 +49,7 @@ class Home extends Component {
             .catch(err=>console.log(err))
     };
     getSeasonOdds(league) {
+        this.setState({seasonOdds: []})
         API.getSeasonOdds(league)
             .then(res=> {
                 this.setState({ bets: [], dailyBets: [], seasonOdds: res.data, header: res.data[0] })
