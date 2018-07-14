@@ -169,7 +169,7 @@ router
             let articles = [];
             response.articles.map(article => {
                 let pubDate = article.publishedAt;
-                pubDate = pubDate.slice(0, 9)
+                pubDate = pubDate.slice(0, 10)
                 const articleInfo = {
                     title: article.title,
                     author: article.author,
