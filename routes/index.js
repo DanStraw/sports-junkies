@@ -7,9 +7,11 @@ var client = new Twitter(keys.twitter);
 const cheerio = require("cheerio");
 const apiRoutes = require("./api");
 const moment = require("moment");
+const NewsAPI = require('newsapi');
+const newsapi = new NewsAPI(keys.foxnews.id);
 
 router
-    .get("/scrapeTopBets", (req,res,next)=> {
+    .get("/scrapeTopBets", (req,res,next)=> {     
         axios.get("http://www.vegasinsider.com/top-betting-trends/").then(function(response) {  
             const $ = cheerio.load(response.data);
             const topBetsTableData = $("td.viCellBg1, td.viCellBg2")
@@ -39,9 +41,10 @@ router
             res.send(bets)
         })
     })
-    .get("/scrapeMLB", function(req,res) {
+    .get("/scrapeMLB/:day", function(req,res) {
+        const day = req.params.day
         const games = [];
-        axios.get("http://www.vegasinsider.com/mlb/scoreboard/").then(function(response) {
+        axios.get("http://www.vegasinsider.com/mlb/scoreboard/scores.cfm/game_date/" + day).then(function(response) {
             const $ = cheerio.load(response.data);
             const gameTable = $("tbody")
             const oddsInfo = [];
@@ -81,7 +84,6 @@ router
                     key: key
                 })
             }
-            console.log(games)
             res.send(games)
         })
     })
@@ -138,7 +140,7 @@ router
                                 number: listing,
                                 account: '@' + t.user.screen_name,
                                 text: t.text,
-                                created: t.created_at,
+                                created: t.created_at.slice(0,19),
                             }
                             break;
                         default:
@@ -147,18 +149,40 @@ router
                                 account: '@' + t.user.screen_name,
                                 avatar: t.user.profile_image_url,
                                 text: t.text,
-                                created: t.created_at,
+                                created: t.created_at.slice(0,19),
                                 image: t.entities.media[0].media_url
                             }
                         break;
                     }
                     twits.push(twit)
                 }
-                console.log(twits)
                 res.send(twits);
-            }
-            
+            }    
         })
+    })
+    .get("/articles/:searchTerm", function(req,res,next) {
+        newsapi.v2.everything({
+            q: req.params.searchTerm,
+            sortBy: 'publishedAt',
+            pageSize: 5,
+          }).then(response => {
+            let articles = [];
+            response.articles.map(article => {
+                let pubDate = article.publishedAt;
+                pubDate = pubDate.slice(0, 9)
+                const articleInfo = {
+                    title: article.title,
+                    author: article.author,
+                    description: article.description,
+                    source: article.source.name,
+                    url: article.url,
+                    image: article.urlToImage,
+                    published: pubDate
+                }
+                articles.push(articleInfo);
+            })
+            res.send(articles)
+        });
     })
 router.use("/api", apiRoutes);
 

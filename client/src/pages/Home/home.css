@@ -1,6 +1,19 @@
 .bet-div {
     background-color: #6f2929;
     opacity: 0.9;
+    margin-bottom: 5px;
+    margin-right: 10px;
+    align-content: flex-end;
+    float: left;
+}
+
+.dailyBetDiv {
+    margin-left: 20px;
+}
+
+.bet {
+    background-color: #2F4F4F;
+    opacity: 0.95;
 }
 
 .grid {
@@ -13,11 +26,13 @@
     position: relative;
     top: 100px;
 }
-
-
-
 .demo-grid-1 {
     text-align: center;
+}
+
+.daily-bets {
+    position: relative;
+    left: 30px;
 }
 
 .text-button {

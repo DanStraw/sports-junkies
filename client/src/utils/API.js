@@ -4,8 +4,9 @@ export default {
     getTrendingBets: function() {
         return axios.get("/scrapeTopBets")
     },
-    getMlbGames: function() {
-        return axios.get("/scrapeMLB")
+    getMlbGames: function(req) {
+        let day = req.month + "-" + req.day + "-2018"
+        return axios.get("/scrapeMLB/" + day)
     },
     getSeasonOdds: function(league) {
         return axios.get("/seasonOdds/" + league)
@@ -18,5 +19,8 @@ export default {
     },
     getTweets: function(account) {
         return axios.get("/tweets/" + account)
+    },
+    getArticles: function(searchTerm) {
+        return axios.get("/articles/" + searchTerm)
     }
 }
