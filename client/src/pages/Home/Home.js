@@ -87,6 +87,7 @@ class Home extends Component {
         }
     };
     createBetModel(betData) {
+        console.log('test')
         const betModel = {
             typeOfBet: 'moneyLine',
             team1: betData.team1.team,
