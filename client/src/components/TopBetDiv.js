@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardTitle, CardText, CardActions, Button } from 'react-mdl';
+import { Card, CardTitle, CardText } from 'react-mdl';
 
 const TopBetDiv = (props) => {
     return (

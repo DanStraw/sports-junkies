@@ -8,7 +8,10 @@ const betSchema = new Schema({
     team1Line: { type: String, required: true},
     team2Line: { type: String, required: false },
     key: { type: String, required: true },   
-    date: { type: String, required: false }
+    date: { type: String, required: false },
+    wager_team: { type: String, required: false },
+    wager: { type: Number, required: false },
+    wager_sign: { type: String, required: false }
   });
   
   const Bet = mongoose.model("Bet", betSchema);
