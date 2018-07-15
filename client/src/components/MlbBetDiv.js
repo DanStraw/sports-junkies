@@ -1,8 +1,7 @@
 import React from 'react';
-import { Card, CardTitle, CardText, CardActions, Button } from 'react-mdl';
+import { Card, CardTitle, CardText, CardActions } from 'react-mdl';
 
 const MlbBetDiv = (props) => {
-    console.log(props.changeHandler)
     return (
         <Card className="bet-div" shadow={1} style={{width: '280px', height: '280px', margin: 'auto'}}>
             <CardTitle expand style={{color: '#fff', borderBottom: '1px solid #fff', height: '40px' }}>{props.bet.team1.team} vs. {props.bet.team2.team}</CardTitle>
@@ -19,7 +18,7 @@ const MlbBetDiv = (props) => {
                     <option value={props.bet.team2.team}>{props.bet.team2.team}</option>
                 </select>
                 <input onChange={props.changeHandler} name="wager" />
-                <Button colored onClick={props.submitHandler}>Save Bet</Button>
+                
             </CardActions>
         </Card>
     )
