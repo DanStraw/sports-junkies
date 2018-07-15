@@ -15,5 +15,26 @@ router
     .post("/bets",(req,res,next) => {
         betController.create(req.body)
     })
+    .get("/bets", (req,res,next) => {    
+        betController.findAll((err,docs)=> {
+            if(err) {
+                console.log('----------------err-------------------')
+                console.log(err)
+                console.log('----------------err-------------------')
+            }
+            console.log('docs:', docs)
+            res.json(docs)
+        })
+    })
+    .get("/bets/:id", (req,res,next) => {
+        console.log('getusersbetapiroute')
+        console.log(req.params)
+        console.log("---------------")
+        userController.findById(req,(err,docs)=>{
+            if(err) console.log(err)
+            console.log('controllerdocs:', docs)
+            res.json(docs)
+        })
+    })
 
 module.exports = router;

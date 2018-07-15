@@ -4,7 +4,7 @@ import API from '../../utils/API';
 import { Grid, Cell, Button } from 'react-mdl';
 import './home.css';
 import TopBetDiv from '../../components/TopBetDiv';
-import DailyBetDiv from '../../components/DailyBetDiv';
+import MlbBetDiv from '../../components/MlbBetDiv';
 import SeasonBetDiv from '../../components/SeasonBetDiv.js';
 
 class Home extends Component {
@@ -24,6 +24,8 @@ class Home extends Component {
         this.getMlbGames = this.getMlbGames.bind(this)
         this.getSeasonOdds = this.getSeasonOdds.bind(this)
         this.handleSelectChange = this.handleSelectChange.bind(this)
+        this.saveBet = this.saveBet.bind(this)
+        this.handleChange = this.handleChange.bind(this)
     }
     componentDidMount() {
         this.getTopBets()
@@ -61,27 +63,46 @@ class Home extends Component {
     };
 
     handleChange(event) {
+        console.log(event.target.name)
         const { name, value } = event.target;
         this.setState({ [name]: value })
     }
 
-    saveBet = (betData, event) => {
-        event.preventDefault()
-        betData.wager = this.state.wager;
-        betData.wager_team = this.state.wager_team
-        switch (betData.wager_team) {
-            case betData.team1.team:
-                betData.odds = betData.team1.moneyLine
-                let odds = betData.odds
-                let sign = odds.slice(0, 2).trim()
-                break;
-            case betData.team2.team:
-                betData.odds = betData.team2.moneyLine
-                odds = betData.odds
-                sign = odds.slice(0, 2).trim()
-                console.log(sign, sign.length)
-        }
-        // API.saveBet()
+    saveBet = betData => {
+        console.log(betData)
+
+
+        // betData.wager = this.state.wager;
+        // betData.wager_team = this.state.wager_team
+        // // switch (betData.wager_team) {
+        // //     case betData.team1.team:
+        // //         betData.odds = betData.team1.moneyLine
+        // //         let odds = betData.odds
+        // //         let sign = odds.slice(0, 2).trim()
+        // //         break;
+        // //     case betData.team2.team:
+        // //         betData.odds = betData.team2.moneyLine
+        // //         odds = betData.odds
+        // //         sign = odds.slice(0, 2).trim()
+        // //         console.log(sign, sign.length)
+        // // }
+
+
+
+        // const betModel = {
+        //     typeOfBet: 'moneyLine',
+        //     team1: betData.team1.team,
+        //     team2: betData.team2.team,
+        //     team1Line: betData.team1.moneyLine,
+        //     team2Line: betData.team2.moneyLine,
+        //     key: betData.key,
+        //     date: betData.key.slice(0,9)
+        // }
+        // API.saveBet(betModel)
+        //     .then(res=>{
+        //         console.log('bet added, ' + res.data)
+        //     })
+        //     .catch(err => console.log(err))
     };
 
     render() {
@@ -133,7 +154,7 @@ class Home extends Component {
                                 if (index <= 9) {
                                     return (
                                     <Cell col={4} key={bet.key}>                                     
-                                        <TopBetDiv saveClickHandler={() => this.saveBet(bet)} 
+                                        <TopBetDiv
                                             rank={bet.rank} 
                                             league={bet.league}
                                             line={bet.lvhCurrentLine}
@@ -159,20 +180,13 @@ class Home extends Component {
                                 return (
                                 <div className="bet">
                                     <Cell col={3} key={dailyBet.key}>
-                                        <DailyBetDiv saveClickHandler={() => this.saveBet(dailyBet)}
+                                        <MlbBetDiv saveClickHandler={() => this.saveBet(dailyBet)}
                                             bet={dailyBet}
-                                        />
-                                        <div><p>Wager on Money Line</p></div>
-                                        <form onSubmit={this.saveBet.bind(this, dailyBet)}>
-                                            <select onChange={this.handleChange.bind(this)} value={this.state.wager_team} name="wager_team">
-                                                <option selected value="">Pick a Team</option>
-                                                <option value={dailyBet.team1.team}>{dailyBet.team1.team}</option>
-                                                <option value={dailyBet.team2.team}>{dailyBet.team2.team}</option>
-                                            </select>
-                                            <input value={this.props.wager} onChange={this.handleChange.bind(this)} name="wager" />
-                                            <Button colored type="submit">Save Bet</Button>
-                                        </form>   
-                                        
+                                            submitHandler={() => this.saveBet(dailyBet)}
+                                            changeHandler={this.handleChange.bind(this)}
+                                            wager={this.state.wager}
+                                            wager_team={this.state.wager_team}
+                                        />                                  
                                     </Cell>                                   
                                 </div> 
                                 )}   
