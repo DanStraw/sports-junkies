@@ -6,7 +6,6 @@ var Twitter = require('twitter')
 var client = new Twitter(keys.twitter);
 const cheerio = require("cheerio");
 const apiRoutes = require("./api");
-const moment = require("moment");
 const NewsAPI = require('newsapi');
 const newsapi = new NewsAPI(keys.foxnews.id);
 
@@ -72,7 +71,7 @@ router
                 })
             })
             for (i = 0; i < oddsInfo.length; i+=2) {
-                const currentDate = moment().format("YYYYMMDD")
+                const currentDate = req.params.day
                 let key = currentDate + oddsInfo[i].team + "vs" + oddsInfo[i + 1].team;
                 key = key.split(" ")
                 key = key.join("")

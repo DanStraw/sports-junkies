@@ -10,9 +10,6 @@ const TopBetDiv = (props) => {
                 <p>League: {props.league}</p>
                 <p>Line: {props.line}</p>
             </CardText>
-            <CardActions border>
-                <Button colored onClick={props.saveClickHandler}>Save Bet</Button>
-            </CardActions>
         </Card>
     )
 }
