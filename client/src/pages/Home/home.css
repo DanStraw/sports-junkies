@@ -14,8 +14,14 @@
 .bet {
     background-color: #2F4F4F;
     opacity: 0.95;
+    position: relative;
+    float: left;
+    left: 100px;
 }
 
+.bet-cell {
+    align-content: center;
+}
 .grid {
     position: relative;
     top: 60px;

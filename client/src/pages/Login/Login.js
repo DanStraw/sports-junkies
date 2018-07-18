@@ -38,13 +38,6 @@ class Login extends Component {
         .catch(err => console.log(err));
     };
 
-    googleLogin = event => {
-        event.preventDefault()
-        API.googleLogin()
-            .then(res=>console.log(res))
-            .catch(err=>console.log(err))
-    }
-
 
 
     render() {
@@ -74,13 +67,16 @@ class Login extends Component {
                                 onChange={this.handleInputChange} />
                             <button onClick={this.handleFormSubmit}>Create</button>
                             <p className="message">Already Registered?<Link to="/login">Login</Link></p>
-                            <Button onClick={this.googleLogin} raised colored>Login with Google</Button> 
+
+
                             <p>{this.state.message}</p>
                             
                         </div>
-                           
+                        <a href="https://localhost:3001/auth/google">
+                            <Button onClick={this.googleLogin} raised colored>Login with Google</Button> 
+                        </a>    
                     </form>
-                    
+                                         
                 </div>
             </div>
         )
