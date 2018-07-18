@@ -87,7 +87,6 @@ class Home extends Component {
     };
 
     saveSeasonBet = team => {
-        console.log(team)
         API.saveSeasonBet(team)
             .then(res=>{
                 console.log('bet added:', res.data)
@@ -215,14 +214,14 @@ class Home extends Component {
                                             return false;
                                         default:
                                             return (
-                                                    <Cell col={2} key={team.key}>
-                                                        <SeasonBetDiv
-                                                            team={team.name}
-                                                            rank={index}
-                                                            odds={team.odds}
-                                                        />
-                                                        <Button raised colored onClick={() => this.saveSeasonBet(team)}>Save Bet</Button>
-                                                    </Cell> 
+                                                <Cell col={2} key={team.key}>
+                                                    <SeasonBetDiv
+                                                        team={team.name}
+                                                        rank={index}
+                                                        odds={team.odds}
+                                                    />
+                                                    <Button raised colored onClick={() => this.saveSeasonBet(team)}>Track this Team</Button>
+                                                </Cell> 
                                             )
                                         }
                                     }

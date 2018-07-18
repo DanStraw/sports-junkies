@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import Login from './pages/Login';
 import Home from './pages/Home';
 import Saved from './pages/Saved';
@@ -9,7 +9,7 @@ import './App.css';
 
 
 const App = () => (
-  <Router>
+  <Router basename="/">
     <div>
       <Switch>
         <Route exact path="/" component={Login} />

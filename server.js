@@ -10,7 +10,7 @@ var GoogleStrategy = require('passport-google-oauth20').Strategy;
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: "http://localhost:3001/auth/google/callback"
+  callbackURL: '/auth/google/callback'
 },
 function (accessToken, refreshToken, profile, cb) {
   return cb(null, profile);
@@ -50,7 +50,7 @@ if (process.env.NODE_ENV === "production") {
 app.get('/home',
 function (req, res) {
   console.log('hello world')
-  res.render('localhost:3000/home');
+  res.render('http://localhost:3000/home');
 });
 
 app.get('/login',
@@ -58,18 +58,17 @@ app.get('/login',
     res.render('/');
 });
 
-app.get('/auth/google',
+app.get('/auth/google', function(req,res) {
   passport.authenticate('google', {
     scope: ['profile']
-  }));
+  });
 
 app.get('/auth/google/callback',
   passport.authenticate('google', {
     failureRedirect: '/login'
   }),
   function (req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/home');
+    res.redirect('http://localhost:3000/home');
   });
 
 app.use(routes);
