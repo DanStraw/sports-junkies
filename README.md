@@ -4,4 +4,6 @@
 
 #Find a live version at https://voyage-saucisson-23031.herokuapp.com/
 
-![ScreenShot](https://voyage-saucisson-23031.herokuapp.com/)
+![ScreenShot](./assets/images/bets-screen.png)
+
+npm install
