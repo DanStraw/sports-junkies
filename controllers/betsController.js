@@ -5,10 +5,11 @@ module.exports = {
         db.Bet.find({}).exec(cb)
     },
     create: function(req, res) {
+        console.log(req)
         db.Bet
-            .create(req)
+            .create(req[0])
             .then(function(dbBet) {
-                return db.User.findOneAndUpdate({_id: "5b4a46dc247d765f6c0e3a57"}, { $push: { bets: dbBet._id } }, { new: true });
+                return db.User.findOneAndUpdate({_id: req[1]}, { $push: { bets: dbBet._id } }, { new: true });
             })
             .then(dbBet =>{
                 console.log(dbBet)

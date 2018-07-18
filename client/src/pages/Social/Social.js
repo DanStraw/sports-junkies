@@ -10,7 +10,7 @@ class Social extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            experts: ["billsimmons", "notthefakeSVP", "darrenrovell", "ColinCowherd", "VegasPointBlank", "kellyinvegas", "ESPNStatsInfo"],
+            experts: ["TwitVI", "billsimmons", "notthefakeSVP", "darrenrovell", "ColinCowherd", "VegasPointBlank", "kellyinvegas", "ESPNStatsInfo"],
             search: '',
             news: props.newsArticles,
             account: '',
@@ -18,9 +18,10 @@ class Social extends Component {
             articles: []
         };
     }
-    // componentDidMount() {
-    //     this.displaytweets(this.state.account)
-    // }
+    componentDidMount() {
+        this.displaytweets('TwitVI');
+        this.getArticles('baseball')
+    }
 
     displaytweets = account => {
         API.getTweets(account)
@@ -41,15 +42,15 @@ class Social extends Component {
     }
 
     handleFormSubmit = event => {
-        
-        console.log(this.state.search)
-        API.getArticles(this.state.search)
-            .then(res => {
-                console.log(res.data)
-                this.setState({articles: res.data})
-            })
-            .catch(err => console.log(err))
+        this.getArticles(this.state.search)      
         event.preventDefault()
+    }
+    getArticles(searchTerm) {
+        API.getArticles(searchTerm)
+        .then(res => {
+            this.setState({articles: res.data})
+        })
+        .catch(err => console.log(err))
     }
 
     render() {   
@@ -63,7 +64,7 @@ class Social extends Component {
                         <h3>Sports Articles</h3>
                             <div>
                                 <form style={{marginBottom: '10px'}} onSubmit={this.handleFormSubmit.bind(this)}>
-                                    <input type="text" ref="sports articles" value={this.state.search} onChange={this.updateSearch.bind(this)}/>
+                                    <input type="text" ref="sports articles" placeholder="baseball" value={this.state.search} onChange={this.updateSearch.bind(this)}/>
                                     <button className="btn btn-default">Search News Articles</button>
                                 </form>
                                 {this.state.articles.map(article=>{

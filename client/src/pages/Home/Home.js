@@ -24,7 +24,7 @@ class Home extends Component {
         this.getMlbGames = this.getMlbGames.bind(this)
         this.getSeasonOdds = this.getSeasonOdds.bind(this)
         this.handleSelectChange = this.handleSelectChange.bind(this)
-        this.handleChange = this.handleChange.bind(this)
+        this.handleChange = this.handleChange.bind(this);
     }
     componentDidMount() {
         this.getTopBets()
@@ -42,7 +42,6 @@ class Home extends Component {
             day: this.state.day,
             month: this.state.month,
         }
-        console.log(req)
         API.getMlbGames(req)
             .then(res=> {
                 this.setState({ bets: [], dailyBets: res.data, seasonOdds: [], header: this.state.month + "/" + this.state.day + "/18 MLB Games"  })
@@ -86,8 +85,16 @@ class Home extends Component {
                 break;
         }
     };
+
+    saveSeasonBet = team => {
+        console.log(team)
+        API.saveSeasonBet(team)
+            .then(res=>{
+                console.log('bet added:', res.data)
+            })
+            .catch(err=>console.log(err))
+    }
     createBetModel(betData) {
-        console.log('test')
         const betModel = {
             typeOfBet: 'moneyLine',
             team1: betData.team1.team,
@@ -134,7 +141,7 @@ class Home extends Component {
                                     <option value="">DD</option>
                                     {days.map(day=><option key={day} value={day}>{day}</option>)}   
                                 </select>
-                                <Button raised colored onClick={this.getMlbGames}>Today's Games</Button>
+                                <Button raised colored onClick={this.getMlbGames}>Get MLB Games</Button>
                             </form>
                         </Cell>
                         <Cell col={4}>
@@ -208,13 +215,14 @@ class Home extends Component {
                                             return false;
                                         default:
                                             return (
-                                                <Cell col={2} key={team.key}>
-                                                    <SeasonBetDiv saveClickHandler={() => this.saveBet(team)}
-                                                        team={team.name}
-                                                        rank={index}
-                                                        odds={team.odds}
-                                                    />
-                                                </Cell>    
+                                                    <Cell col={2} key={team.key}>
+                                                        <SeasonBetDiv
+                                                            team={team.name}
+                                                            rank={index}
+                                                            odds={team.odds}
+                                                        />
+                                                        <Button raised colored onClick={() => this.saveSeasonBet(team)}>Save Bet</Button>
+                                                    </Cell> 
                                             )
                                         }
                                     }

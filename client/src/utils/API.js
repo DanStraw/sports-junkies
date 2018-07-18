@@ -26,7 +26,16 @@ export default {
     getBets: function() {
         return axios.get("/api/bets")
     },
-    getUsersBets: function(userID) {
-        return axios.get('/api/bets/' + userID)
+    getUsersBets: function() {
+        return axios.get('/api/usersbets/')
+    },
+    setID: function(id) {
+        return axios.post('/api/id/', id)
+    },
+    saveSeasonBet: function(team) {
+        return axios.post('/api/seasonBet', team)
+    },
+    googleLogin: function(){
+        return axios.get("/auth/google")
     }
 }

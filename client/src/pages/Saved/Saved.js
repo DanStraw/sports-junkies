@@ -11,7 +11,6 @@ class Saved extends Component {
         super(props)
         this.state = {
             savedBets: [],
-            userID: '5b4a46dc247d765f6c0e3a55',
             user_name: ''
         }
         this.getUsersBets = this.getUsersBets.bind(this)
@@ -22,9 +21,11 @@ class Saved extends Component {
     }
     getUsersBets() {
         this.setState({savedBets: []})
-        API.getUsersBets(this.state.userID)
+        API.getUsersBets()
             .then(res=> {
-                this.setState({ savedBets: res.data.bets, user_name: res.data.username})
+                if (res.data !== "") {
+                    this.setState({ savedBets: res.data.bets, user_name: res.data.username})
+                }
             })
             .catch(err=> {
                 console.log(err)
@@ -39,14 +40,23 @@ class Saved extends Component {
                     <Cell col={12}><h2>{this.state.user_name}'s Tracked Bets</h2></Cell>
                 </Grid>
                 <div>
-                    {this.state.savedBets.map(bet=> {
-                        return (
-                            <div className="saved-bet">
-                                <Cell col={3} key={bet.key}>
+                    
+                    {this.state.savedBets.length ? (
+                        <div>
+                           {this.state.savedBets.map(bet=> {
+                               console.log('hello bets')
+                              return (
+                                <div className="saved-bet">
+                                  <Cell col={3} key={bet.key}>
                                     <SavedBet bet={bet} />
-                                </Cell>                                   
-                            </div> 
-                    )})}
+                                  </Cell>                                   
+                                </div> 
+                            )})}
+                        </div>
+                    ) : (
+                        <div style={{color: 'white', textAlign: 'center'}}><Cell col={12}><h4>No Saved Bets</h4></Cell></div>
+                    )
+                    }
                 </div>
             </div>
         )
