@@ -36,26 +36,28 @@ const betSeed = [
     team1Line:  '+109',
     team2Line: '-119',
     key: '5-12-18SanFranciscovsPittsburgh',   
-    date: Date.now()
+    date: '5-12-18'
   }
 ]
 
 
-db.User
-  .remove({})
-  .then(() => db.User.collection.insertMany(userSeed))
-  .then(data => {
-    console.log(data.insertedCount + " records inserted!");
-    process.exit(0);
-  })
-  .catch(err => {
-    console.error(err);
-    process.exit(1);
-  });
+// db.User
+//   .remove({})
+//   .then(() => db.User.collection.insertMany(userSeed))
+//   .then(data => {
+//     console.log(data.insertedCount + " records inserted!");
+//     process.exit(0);
+//   })
+//   .catch(err => {
+//     console.error(err);
+//     process.exit(1);
+//   });
 
-  db.Bet.insertMany(betSeed)
+  db.Bet
+    .remove({})
+    .then(() => db.Bet.collection.insertMany(betSeed))
     .then(data => {
-      console.log(data.insertedCount) + " records inserted!"
+      console.log(data.insertedCount + " records inserted!") 
       process.exit(0);
     })
     .catch(err => {

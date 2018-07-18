@@ -12,12 +12,9 @@ module.exports = {
     },
     findById: function(req,cb) {
         db.User
-          .findById(req.params.id)
+          .findById(req[1])
           .populate('bets')
           .exec(cb)
-        //   .catch(err => {
-        //       res.status(422).json(err)
-        //     });
     },
     remove: function(req, res) {
         db.User 

@@ -1,4 +1,5 @@
 module.exports = {
     User: require("./user"),
-    Bet: require('./bet')
+    Bet: require('./bet'),
+    GoogleUser: require('./googleUser')
 }
