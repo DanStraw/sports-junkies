@@ -38,7 +38,14 @@ class Login extends Component {
         .catch(err => console.log(err));
     };
 
-
+    componentDidUpdate() {
+        let pwlength = this.state.password.length
+        pwlength = pwlength.split("")
+        for (let i = 0; i < array.length; i++) {
+            const element = array[i];
+            
+        }
+    }
 
     render() {
         return (
