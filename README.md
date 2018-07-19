@@ -6,6 +6,12 @@
 
 #Find a live version at https://voyage-saucisson-23031.herokuapp.com/
 
+#login page
+
+![ScreenShot](./assets/images/login.png)
+
+#Bets Screen
+
 ![ScreenShot](./assets/images/bets-screen.png)
 
 #Utilizes cheerio to scrape VegasInsider for Betting Info
