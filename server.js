@@ -17,6 +17,7 @@ function (accessToken, refreshToken, profile, cb) {
 }));
 
 passport.serializeUser(function (user, cb) {
+  console.log('serialize:', user)
   cb(null, user);
 });
 
@@ -43,13 +44,13 @@ app.use(require('express-session')({
 app.use(passport.initialize());
 app.use(passport.session());
 
-if (process.env.NODE_ENV === "production") {
+// if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
-}
+// }
 
 app.get('/home',
 function (req, res) {
-  res.render('http://localhost:3000/home');
+  res.send('home');
 });
 
 app.get('/login',
@@ -59,7 +60,7 @@ app.get('/login',
 
 app.get('/auth/google', 
   passport.authenticate('google', {
-    scope: ['profile']
+    scope: ['profile', 'email']
   })
 );
 
@@ -68,7 +69,7 @@ app.get('/auth/google/callback',
     failureRedirect: '/login'
   }),
   function (req, res) {
-    res.redirect('http://localhost:3000/home');
+    res.redirect('/#/home');
   });
 
 app.use(routes);

@@ -72,11 +72,11 @@ class Login extends Component {
                             <p>{this.state.message}</p>
                             
                         </div>
-                        <a href="https://localhost:3001/auth/google">
-                            <Button onClick={this.googleLogin} raised colored>Login with Google</Button> 
-                        </a>    
+                         
                     </form>
-                                         
+                    <a href="/auth/google">
+                            {/* <Button raised colored>Login with Google</Button>  */} Login with Google
+                    </a>                    
                 </div>
             </div>
         )
