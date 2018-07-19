@@ -49,7 +49,6 @@ if (process.env.NODE_ENV === "production") {
 
 app.get('/home',
 function (req, res) {
-  console.log('hello world')
   res.render('http://localhost:3000/home');
 });
 
@@ -58,10 +57,11 @@ app.get('/login',
     res.render('/');
 });
 
-app.get('/auth/google', function(req,res) {
+app.get('/auth/google', 
   passport.authenticate('google', {
     scope: ['profile']
-  });
+  })
+);
 
 app.get('/auth/google/callback',
   passport.authenticate('google', {
