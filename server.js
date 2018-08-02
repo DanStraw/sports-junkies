@@ -71,11 +71,10 @@ app.get('/auth/google',
 
 app.get('/auth/google/callback',
   passport.authenticate('google', {
+    successRedirect: '/#/home',
     failureRedirect: '/login'
   }),
-  function (req, res) {
-    res.redirect('/#/home');
-  });
+);
 
 app.use(routes);
 
