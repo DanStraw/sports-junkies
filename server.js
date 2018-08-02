@@ -51,7 +51,8 @@ app.use(passport.session());
 
 app.get('/home',
 function (req, res) {
-  res.send('home');
+  // res.send('home');
+  console.log('home')
 });
 
 app.get('/login',
@@ -60,6 +61,9 @@ app.get('/login',
 });
 
 app.get('/auth/google', 
+// function(req,res) {
+//   console.log('what up')
+// }
   passport.authenticate('google', {
     scope: ['profile', 'email']
   })
