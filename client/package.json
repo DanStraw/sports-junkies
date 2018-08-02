@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "proxy": {
-    "/auth/": {
+    "https://voyage-saucisson-23031.herokuapp.com/auth/": {
       "target": "http://localhost:3001/"
     } 
   },
