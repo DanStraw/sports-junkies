@@ -41,10 +41,6 @@ class Login extends Component {
     componentDidUpdate() {
         let pwlength = this.state.password.length
         pwlength = pwlength.split("")
-        for (let i = 0; i < array.length; i++) {
-            const element = array[i];
-            
-        }
     }
 
     render() {
@@ -82,16 +78,12 @@ class Login extends Component {
                          
                     </form>
                     <a href="/auth/google">
-                            {/* <Button raised colored>Login with Google</Button>  */} Login with Google
+                        Login with Google
                     </a>                    
                 </div>
             </div>
         )
-
-
     }
-
-
 }
 
 export default Login;
