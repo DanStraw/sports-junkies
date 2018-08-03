@@ -5,7 +5,6 @@ module.exports = {
         db.Bet.find({}).exec(cb)
     },
     create: function(req, res) {
-        console.log(req)
         db.Bet
             .create(req[0])
             .then(function(dbBet) {

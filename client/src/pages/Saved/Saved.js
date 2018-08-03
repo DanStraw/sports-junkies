@@ -11,17 +11,33 @@ class Saved extends Component {
         super(props)
         this.state = {
             savedBets: [],
-            user_name: ''
+            loggedIn: false,
+            user: null
         }
         this.getUsersBets = this.getUsersBets.bind(this)
+        this._getUser = this._getUser.bind(this)
     }
     
     componentDidMount() {
-        this.getUsersBets()
+        this._getUser()
     }
+    _getUser() {
+        API.getUser()
+            .then(res=> {
+                console.log(res)
+                this.setState({loggedIn: true, user: res.data.user })
+                
+            })
+            .then(()=>{
+                console.log(this.state)
+                this.getUsersBets()
+            })
+            .catch(err=>console.log(err))
+    }
+
     getUsersBets() {
         this.setState({savedBets: []})
-        API.getUsersBets()
+        API.getUsersBets(this.state.user._id)
             .then(res=> {
                 if (res.data !== "") {
                     this.setState({ savedBets: res.data.bets, user_name: res.data.username})
@@ -31,36 +47,53 @@ class Saved extends Component {
                 console.log(err)
             })
     }
-
-    render() {
-        return (
-            <div>
-                <Navbar />
-                <Grid className="demo-grid-1">
-                    <Cell col={12}><h2>{this.state.user_name}'s Tracked Bets</h2></Cell>
-                </Grid>
-                <div>
-                    
-                    {this.state.savedBets.length ? (
-                        <div>
-                           {this.state.savedBets.map(bet=> {
-                               console.log('hello bets')
-                              return (
-                                <div className="saved-bet">
-                                  <Cell col={3} key={bet.key}>
-                                    <SavedBet bet={bet} />
-                                  </Cell>                                   
-                                </div> 
-                            )})}
-                        </div>
-                    ) : (
-                        <div style={{color: 'white', textAlign: 'center'}}><Cell col={12}><h4>No Saved Bets</h4></Cell></div>
-                    )
-                    }
-                </div>
-            </div>
-        )
+    componentDidUpdate() {
+        console.log(this.state)
     }
+    render() {
+        if (!this.state.user) {
+            return (
+                <div>
+                    <Navbar />
+                    <Grid className="demo-grid-1">
+                        <Cell col={12}><h2>Tracked Bets</h2></Cell>
+                    </Grid>
+                    <div> 
+                        <div style={{color: 'white', textAlign: 'center'}}><Cell col={12}><h4>No Saved Bets - Login to Save Bets</h4></Cell></div>
+                    </div>
+                </div>
+            )
+        }
+        else {
+            return (
+                <div>
+                    <Navbar />
+                    <Grid className="demo-grid-1">
+                        <Cell col={12}><h2>{this.state.user.firstName}'s Tracked Bets</h2></Cell>
+                    </Grid>
+                    <div>
+                        
+                        {this.state.savedBets.length ? (
+                            <div>
+                               {this.state.savedBets.map(bet=> {
+                                   console.log('hello bets')
+                                  return (
+                                    <div className="saved-bet">
+                                      <Cell col={3} key={bet.key}>
+                                        <SavedBet bet={bet} />
+                                      </Cell>                                   
+                                    </div> 
+                                )})}
+                            </div>
+                        ) : (
+                            <div style={{color: 'white', textAlign: 'center'}}><Cell col={12}><h4>No Saved Bets</h4></Cell></div>
+                        )
+                        }
+                    </div>
+                </div>
+            )
+        }
+    }      
 }
 
 export default Saved;

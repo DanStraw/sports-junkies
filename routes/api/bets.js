@@ -1,13 +1,13 @@
 const router = require("express").Router();
 const usersController = require("../../controllers/usersController");
-const betController = require('../../controllers/betscontroller')
+const betsController = require('../../controllers/betscontroller')
 
 router
   .post("/",(req,res,next) => {
-    betController.create([req.body, id])
+    betsController.create([req.body.betData, req.body.id])
   })
   .get("/", (req,res,next) => {    
-    betController.findAll((err,docs)=> {
+    betsController.findAll((err,docs)=> {
         if(err) {
             console.log(err)
         }
@@ -21,10 +21,11 @@ router
         team1Line: req.body.odds,
         key: req.body.key
     }
-    betController.create([team, id])
+    betsController.create([team, id])
   })
-  .get("/usersbets", (req,res,next) => {
-    userController.findById([req, id],(err,docs)=>{
+  .get("/usersBets/:id", (req,res,next) => {
+    console.log('req.params.id:', req.params.id)
+    usersController.findById(req.params.id,(err,docs)=>{
         if(err) console.log(err)
         res.json(docs)
     })

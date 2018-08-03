@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import './login.css';
 import Navbar from '../../components/Navbar.js';
 import API from '../../utils/API';
@@ -44,8 +43,8 @@ class Login extends Component {
                 <div>
                     <form className="login-page">
                       <div className="form">
-                        <a href="/auth/google">
-                        <button className="google-btn">Login with Google</button>
+                        <a className="google-btn" href="/auth/google">
+                            Login with Google
                         </a>
                       </div>  
                     </form>                        

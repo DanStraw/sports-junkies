@@ -19,15 +19,26 @@ class Home extends Component {
             wager: '',
             month: '',
             day: '',
+            loggedIn: false,
+            user: null
         }
         this.getTopBets = this.getTopBets.bind(this)
         this.getMlbGames = this.getMlbGames.bind(this)
         this.getSeasonOdds = this.getSeasonOdds.bind(this)
         this.handleSelectChange = this.handleSelectChange.bind(this)
         this.handleChange = this.handleChange.bind(this);
+        this._getUser = this._getUser.bind(this)
     }
     componentDidMount() {
         this.getTopBets()
+        this._getUser()
+    }
+    _getUser() {
+        API.getUser()
+            .then(res=> {
+                this.setState({loggedIn: true, user: res.data.user })
+            })
+            .catch(err=>console.log(err))
     }
     getTopBets() {
         API.getTrendingBets()
@@ -106,7 +117,8 @@ class Home extends Component {
             wager: this.state.wager,
             wager_sign: betData.sign
         }
-        API.saveBet(betModel)
+        console.log(betModel, this.state.user._id)
+        API.saveBet(betModel, this.state.user._id)
             .then(res=>{
                 console.log('bet added, ' + res.data)
             })
@@ -135,7 +147,7 @@ class Home extends Component {
                                     <option value="">MM</option>
                                     {months.map(month=><option key={month} value={month}>{month}</option>)}   
                                 </select>
-                                <label for="day">Day</label>
+                                <label htmlFor="day">Day</label>
                                 <select  onChange={this.handleChange.bind(this)} value={this.state.day} name="day">
                                     <option value="">DD</option>
                                     {days.map(day=><option key={day} value={day}>{day}</option>)}   
@@ -186,8 +198,8 @@ class Home extends Component {
                         <Grid className="demo-grid-2 daily-bets">
                             {this.state.dailyBets.map(dailyBet => {
                                 return (
-                                <div className="bet">
-                                    <Cell col={3} key={dailyBet.key}>
+                                <div className="bet" key={dailyBet.key}>
+                                    <Cell col={3}>
                                         <MlbBetDiv
                                             bet={dailyBet}
                                             changeHandler={this.handleChange.bind(this)}

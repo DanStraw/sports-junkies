@@ -11,8 +11,9 @@ module.exports = {
             .catch(err=>res.status(500).json(err))
     },
     findById: function(req,cb) {
+        console.log(req)
         db.User
-          .findById(req[1])
+          .findById(req)
           .populate('bets')
           .exec(cb)
     },

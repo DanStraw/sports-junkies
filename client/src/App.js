@@ -18,19 +18,19 @@ class App extends Component {
     }
     this._getUser = this._getUser.bind(this)
     }
-    componentDidMount() {
+    componentDidUpdate() {
         this._getUser()
     }
 
     _getUser() {
         API.getUser()
             .then(res=> {
+              console.log(res)
                 this.setState({loggedIn: true, user: res.data.user })
             })
             .catch(err=>console.log(err))
     }
     render() {
-      if (this.state.user === null) {
         return (
           <Router basename="/">
             <div>
@@ -38,30 +38,14 @@ class App extends Component {
                 <Route exact path="/" component={Login} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/home" component={Home} />
+                <Route exact path="/saved" component={Saved} />
                 <Route exact path="/social" component={Social} />
                 <Route component={ErrorPage} />
               </Switch>
             </div>
           </Router>
         )  
-      }
-      if (this.state.user !== null) {
-        return (
-          <Router basename="/">
-            <div>
-              <Switch>
-                <Route exact path="/" component={Home} />
-                <Route exact path="/saved" component={Saved} />
-                <Route exact path="/home" component={Home} />
-                <Route exact path="/social" component={Social} />
-                <Route component={ErrorPage} />
-              </Switch>
-            </div>
-          </Router>
-           
-        )
     }
-  }
 }
 
 export default App;
