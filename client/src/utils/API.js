@@ -14,8 +14,9 @@ export default {
     saveUser: function(userData) {
         return axios.post("/api/users", userData);
     },
-    saveBet: function(betData) {
-        return axios.post("/api/bets/", betData)
+    saveBet: function(betData, id) {
+        console.log(betData, id)
+        return axios.post("/api/bets/", {betData, id})
     },
     getTweets: function(account) {
         return axios.get("/api/tweets/" + account)
@@ -26,8 +27,9 @@ export default {
     getBets: function() {
         return axios.get("/api/bets/")
     },
-    getUsersBets: function() {
-        return axios.get('/api/bets/usersbets/')
+    getUsersBets: function(id) {
+        console.log('api get bets for:', id)
+        return axios.get("/api/bets/usersBets/" + id)
     },
     saveSeasonBet: function(team) {
         return axios.post('/api/bets/seasonBet', team)
