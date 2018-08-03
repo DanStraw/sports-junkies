@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './login.css';
 import Navbar from '../../components/Navbar.js';
-import { Button } from 'react-mdl';
 import API from '../../utils/API';
 
 class Login extends Component {
@@ -37,11 +36,6 @@ class Login extends Component {
         .then(this.setState({username: '', password: '', email: '', message: 'Account Created!'}))
         .catch(err => console.log(err));
     };
-
-    componentDidUpdate() {
-        let pwlength = this.state.password.length
-        pwlength = pwlength.split("")
-    }
 
     render() {
         return (

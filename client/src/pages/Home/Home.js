@@ -130,7 +130,7 @@ class Home extends Component {
                         <Cell col={4}><Button raised colored onClick={this.getTopBets}>Top Bets</Button></Cell>
                         <Cell col={4}>
                             <form>
-                                <label for="month">Month</label>
+                                <label htmlFor="month">Month</label>
                                 <select  onChange={this.handleChange.bind(this)} value={this.state.month} name="month">
                                     <option value="">MM</option>
                                     {months.map(month=><option key={month} value={month}>{month}</option>)}   
