@@ -3,9 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "proxy": {
-    "https://voyage-saucisson-23031.herokuapp.com/auth/": {
-      "target": "http://localhost:3001/"
-    } 
+    "/auth/google": {
+      "target": "http://localhost:3001"
+    },
+    "/auth/google/callback": {
+      "target": "http://localhost:3001"
+    },
+    "/auth/user": {
+      "target": "http://localhost:3001"
+    },
+    "/api/": {
+      "target": "http://localhost:3001"
+    }
   },
   "dependencies": {
     "axios": "^0.18.0",
