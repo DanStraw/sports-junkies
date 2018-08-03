@@ -10,11 +10,11 @@ module.exports = {
             .then(dbModel =>res.json(dbModel))
             .catch(err=>res.status(500).json(err))
     },
-    findById: function(req, res) {
+    findById: function(req,cb) {
         db.User
-          .findById(req.params.id)
-          .then(dbModel => res.json(dbModel))
-          .catch(err => res.status(422).json(err));
+          .findById(req[1])
+          .populate('bets')
+          .exec(cb)
     },
     remove: function(req, res) {
         db.User 

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './login.css';
 import Navbar from '../../components/Navbar.js';
+import { Button } from 'react-mdl';
 import API from '../../utils/API';
 
 class Login extends Component {
@@ -10,7 +11,8 @@ class Login extends Component {
         password: "",
         passwordPlaceHolder: '',
         contact: "",
-        isRegistered:false
+        isRegistered:false,
+        message: ''
     }
 
     handleInputChange = event => {
@@ -23,6 +25,7 @@ class Login extends Component {
             [name]: value
         });
     };
+
     handleFormSubmit = event => {
         event.preventDefault();
         API.saveUser({
@@ -30,44 +33,57 @@ class Login extends Component {
             password: this.state.password,
             email: this.state.contact
         })
-        .then(res => console.log('saved user:', res))
+        .then(res => API.setID({id: res.data._id }))
+        .then(this.setState({username: '', password: '', email: '', message: 'Account Created!'}))
         .catch(err => console.log(err));
     };
 
-
+    componentDidUpdate() {
+        let pwlength = this.state.password.length
+        pwlength = pwlength.split("")
+    }
 
     render() {
         return (
          <div>
              <Navbar />
-                <form onSubmit={this.handleFormSubmit} className="login-page">
-                    <div className="form">
-                        <input
-                            type="text"
-                            placeholder="username"
-                            name="username"
-                            onChange={this.handleInputChange} />
-                        <input
-                            type="text"
-                            placeholder="password"
-                            name="password"
-                            onChange={this.handleInputChange} />
-                        <input
-                            className="text"
-                            name="contact"
-                            placeholder="Email or Phone Number"
-                            onChange={this.handleInputChange} />
-                        <button>Create</button>
-                        <p className="message">Already Registered?<Link to="/login">Login</Link></p>
-                    </div>
-                </form>
+                <div>
+                    <form className="login-page">
+                        <div className="form">
+                            <input
+                                type="text"
+                                placeholder="username"
+                                name="username"
+                                onChange={this.handleInputChange}
+                                value={this.state.username} />
+                            <input
+                                type="text"
+                                placeholder="password"
+                                name="password"
+                                value={this.state.password}
+                                onChange={this.handleInputChange} />
+                            <input
+                                className="text"
+                                name="contact"
+                                placeholder="Email"
+                                value={this.state.email}
+                                onChange={this.handleInputChange} />
+                            <button onClick={this.handleFormSubmit}>Create</button>
+                            <p className="message">Already Registered?<Link to="/login">Login</Link></p>
+
+
+                            <p>{this.state.message}</p>
+                            
+                        </div>
+                         
+                    </form>
+                    <a href="/auth/google">
+                        Login with Google
+                    </a>                    
+                </div>
             </div>
         )
-
-
     }
-
-
 }
 
 export default Login;

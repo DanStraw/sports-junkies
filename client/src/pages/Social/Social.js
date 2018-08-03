@@ -4,12 +4,13 @@ import Navbar from '../../components/Navbar';
 import './social.css';
 import Twit from '../../components/Twit.js';
 import API from '../../utils/API';
-import Articles from '../../components/Articles.js';
+import Article from '../../components/Article';
 
 class Social extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            experts: ["TwitVI", "billsimmons", "notthefakeSVP", "darrenrovell", "ColinCowherd", "VegasPointBlank", "kellyinvegas", "ESPNStatsInfo"],
             search: '',
             news: props.newsArticles,
             account: '',
@@ -18,7 +19,8 @@ class Social extends Component {
         };
     }
     componentDidMount() {
-        this.displaytweets(this.state.account)
+        this.displaytweets('TwitVI');
+        this.getArticles('baseball')
     }
 
     displaytweets = account => {
@@ -36,26 +38,22 @@ class Social extends Component {
 
     updateSearch(event) {
         this.setState({search: event.target.value});
+        console.log(this.state.search)
     }
 
-    handleFormSubmit() {
-        console.log('ehhlo')
-        // API.getArticles(this.state.search)
+    handleFormSubmit = event => {
+        this.getArticles(this.state.search)      
+        event.preventDefault()
+    }
+    getArticles(searchTerm) {
+        API.getArticles(searchTerm)
+        .then(res => {
+            this.setState({articles: res.data})
+        })
+        .catch(err => console.log(err))
     }
 
-    addContact(event) {
-        event.preventDefault();
-        console.log(this);
-    }
-
-    render() {
-        const experts = ["billsimmons", "notthefakeSVP", "darrenrovell", "ColinCowherd", "VegasPointBlank", "kellyinvegas", "ESPNStatsInfo"];
-        // let filteredArticles = this.state.articles.filter(
-        //     (articles) => {
-        //         return articles.name.toLowerCase().indexOf(this.state.search)
-        //     } 
-        // )
-       
+    render() {   
         return (
             <div>  
               <Navbar />
@@ -65,28 +63,30 @@ class Social extends Component {
                         <div>
                         <h3>Sports Articles</h3>
                             <div>
-                                <input type="text"
-                                    placeholder="Search"
-                                    value={this.state.search}
-                                    onChange={this.updateSearch.bind(this)}/>
-                                <form onSubmit={this.handleFormSubmit.bind(this)}>
-                                    <input type="text" ref="sports articles" />
+                                <form style={{marginBottom: '10px'}} onSubmit={this.handleFormSubmit.bind(this)}>
+                                    <input type="text" ref="sports articles" placeholder="baseball" value={this.state.search} onChange={this.updateSearch.bind(this)}/>
                                     <button className="btn btn-default">Search News Articles</button>
                                 </form>
-                                {/* <ul>
-                                    {filteredNews.map((news)=> {
-                                    return <News articles={articles} key={articles.id}/>               
-                                    })}
-                                </ul>*/}
+                                {this.state.articles.map(article=>{
+                                    return <Article title={article.title}
+                                        author={article.author}
+                                        description={article.description}
+                                        source={article.source}
+                                        url={article.url}
+                                        image={article.image}
+                                        pubDate={article.published}
+                                    />
+                                    })
+                                }
                             </div>
                         </div>
                     </Cell>
                     <Cell col={6} tablet={6}>
                         <div>
                             <h3>Sports Tweets</h3>
-                            <select onChange={this.handleSelectChange} value={this.state.account}>
+                            <select onChange={this.handleSelectChange.bind(this)} value={this.state.account}>
                                 <option selected value="">Select an Expert</option>
-                                {experts.map(expert => {
+                                {this.state.experts.map(expert => {
                                     return <option value={expert}>{expert}</option>
                                 })}
                             </select>

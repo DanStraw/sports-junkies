@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardTitle, CardText, CardActions, Button } from 'react-mdl';
+import { Card, CardTitle, CardText } from 'react-mdl';
 
 const TopBetDiv = (props) => {
     return (
@@ -10,9 +10,6 @@ const TopBetDiv = (props) => {
                 <p>League: {props.league}</p>
                 <p>Line: {props.line}</p>
             </CardText>
-            <CardActions border>
-                <Button colored onClick={props.saveClickHandler}>Save Bet</Button>
-            </CardActions>
         </Card>
     )
 }
