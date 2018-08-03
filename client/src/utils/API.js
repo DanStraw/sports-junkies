@@ -32,4 +32,7 @@ export default {
     saveSeasonBet: function(team) {
         return axios.post('/api/bets/seasonBet', team)
     },
+    getUser: function() {
+        return axios.get('/auth/user')
+    }
 }
