@@ -43,39 +43,14 @@ class Login extends Component {
              <Navbar />
                 <div>
                     <form className="login-page">
-                        <div className="form">
-                            <input
-                                type="text"
-                                placeholder="username"
-                                name="username"
-                                onChange={this.handleInputChange}
-                                value={this.state.username} />
-                            <input
-                                type="text"
-                                placeholder="password"
-                                name="password"
-                                value={this.state.password}
-                                onChange={this.handleInputChange} />
-                            <input
-                                className="text"
-                                name="contact"
-                                placeholder="Email"
-                                value={this.state.email}
-                                onChange={this.handleInputChange} />
-                            <button onClick={this.handleFormSubmit}>Create</button>
-                            <p className="message">Already Registered?<Link to="/login">Login</Link></p>
-
-
-                            <p>{this.state.message}</p>
-                            
-                        </div>
-                         
-                    </form>
-                    <a href="/auth/google">
-                        Login with Google
-                    </a>                    
+                      <div className="form">
+                        <a href="/auth/google">
+                        <button className="google-btn">Login with Google</button>
+                        </a>
+                      </div>  
+                    </form>                        
                 </div>
-            </div>
+         </div>
         )
     }
 }

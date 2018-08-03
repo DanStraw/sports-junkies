@@ -6,7 +6,7 @@ import Saved from './pages/Saved';
 import Social from './pages/Social';
 import ErrorPage from "./pages/Error";
 import './App.css';
-import API from "./utils/API"
+import API from "./utils/API";
 
 
 class App extends Component { 
@@ -58,14 +58,10 @@ class App extends Component {
               </Switch>
             </div>
           </Router>
+           
         )
-      }
     }
   }
-  
-
- (
-  
-);
+}
 
 export default App;
