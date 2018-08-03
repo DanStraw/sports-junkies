@@ -1,4 +1,9 @@
-#Sports-Junkies
+
+# sports-junkies
+
+Adding a README
+
+
 
 We wanted to come up with an application that allows people to do find a one-stop-shop within the world of "sports betting." We designed 
 an app that would enable the average sports gambler come to a website and find out which sports teams are being betted on the most.
@@ -27,3 +32,4 @@ For API we used Fox Sports and we added Scraping from Twitter.
 #Utilizes cheerio to scrape VegasInsider for Betting Info
 
 ![ScreenShot](./assets/images/vi.png)
+
