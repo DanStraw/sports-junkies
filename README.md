@@ -3,6 +3,7 @@
 
 
 We wanted to come up with an application that allows people to do find a one-stop-shop within the world of "sports betting." We designed an app that would enable the average sports gambler come to a website and find out which sports teams are being betted on the most.
+
 He/she can come to our webpage, login and keep track of their bets. We added an API from Fox Sports so they could also see the most 
 popular headlines in sports.  We also added a "scraping" feature from Twitter, customers will be able to see what the top 5 experts were saying about which athelete, team, franchise owners etc. were doing in the industry. This would help them narrow down their bets. 
 
