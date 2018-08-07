@@ -10,26 +10,7 @@ import API from "./utils/API";
 
 
 class App extends Component { 
-  constructor(props) {
-    super(props)
-    this.state = {
-        loggedIn: false,
-        user: null
-    }
-    this._getUser = this._getUser.bind(this)
-    }
-    componentDidUpdate() {
-        this._getUser()
-    }
-
-    _getUser() {
-        API.getUser()
-            .then(res=> {
-              console.log(res)
-                this.setState({loggedIn: true, user: res.data.user })
-            })
-            .catch(err=>console.log(err))
-    }
+  
     render() {
         return (
           <Router basename="/">
