@@ -17,14 +17,12 @@ router
   .post('/seasonBet', (req,res,next) => {
     const team = {
         typeOfBet: 'championship_odds',
-        team1: req.body.name,
-        team1Line: req.body.odds,
-        key: req.body.key
+        team1: req.body.team.name,
+        team1Line: req.body.team.odds,
     }
-    betsController.create([team, id])
+    betsController.create([team, req.body.id])
   })
   .get("/usersBets/:id", (req,res,next) => {
-    console.log('req.params.id:', req.params.id)
     usersController.findById(req.params.id,(err,docs)=>{
         if(err) console.log(err)
         res.json(docs)

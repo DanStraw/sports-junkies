@@ -15,12 +15,15 @@ class Social extends Component {
             news: props.newsArticles,
             account: '',
             tweets: [],
-            articles: []
+            articles: [],
+            loggedIn: false,
+            user: null
         };
     }
     componentDidMount() {
         this.displaytweets('TwitVI');
         this.getArticles('baseball')
+        this._getUser()
     }
 
     displaytweets = account => {
@@ -30,6 +33,17 @@ class Social extends Component {
             })
             .catch(err => console.log(err))
     }
+    _getUser() {
+        API.getUser()
+            .then(res=> {
+                if (res.data.user) {
+                    this.setState({loggedIn: true, user: res.data.user })
+                } else {
+                    this.setState({loggedIn: false, user: null })
+                }
+            })
+            .catch(err=>console.log(err))
+    }
 
     handleSelectChange = event => {
         this.setState({account: event.target.value })
@@ -38,7 +52,6 @@ class Social extends Component {
 
     updateSearch(event) {
         this.setState({search: event.target.value});
-        console.log(this.state.search)
     }
 
     handleFormSubmit = event => {
@@ -56,7 +69,7 @@ class Social extends Component {
     render() {   
         return (
             <div>  
-              <Navbar />
+              <Navbar logged={this.state.loggedIn} />
                 <br />
                 <Grid className="demo-grid-3">
                     <Cell col={6} tablet={6}>

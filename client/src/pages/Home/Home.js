@@ -36,7 +36,12 @@ class Home extends Component {
     _getUser() {
         API.getUser()
             .then(res=> {
-                this.setState({loggedIn: true, user: res.data.user })
+                if (res.data.user) {
+                    this.setState({loggedIn: true, user: res.data.user })
+                } else {
+                    this.setState({loggedIn: false, user: null })
+                }
+                
             })
             .catch(err=>console.log(err))
     }
@@ -84,12 +89,16 @@ class Home extends Component {
                 betData.odds = betData.team1.moneyLine
                 let odds = betData.odds
                 betData.sign = odds.slice(0, 2).trim()
+                betData.wagerOdds = odds
+                betData.wagerOdds = betData.wagerOdds.trim().slice(1, betData.wagerOdds.length)
                 this.createBetModel(betData)
                 break;
             case betData.team2.team:
                 betData.odds = betData.team2.moneyLine
                 odds = betData.odds
                 betData.sign = odds.slice(0, 2).trim()
+                betData.wagerOdds = odds
+                betData.wagerOdds = betData.wagerOdds.trim().slice(1, betData.wagerOdds.length)
                 this.createBetModel(betData)
                 break;
             default:
@@ -98,13 +107,16 @@ class Home extends Component {
     };
 
     saveSeasonBet = team => {
-        API.saveSeasonBet(team)
+        console.log(team)
+        API.saveSeasonBet(team, this.state.user._id)
             .then(res=>{
                 console.log('bet added:', res.data)
             })
             .catch(err=>console.log(err))
     }
     createBetModel(betData) {
+        console.log('betdata:', betData)
+        
         const betModel = {
             typeOfBet: 'moneyLine',
             team1: betData.team1.team,
@@ -112,12 +124,18 @@ class Home extends Component {
             team1Line: betData.team1.moneyLine.trim(),
             team2Line: betData.team2.moneyLine.trim(),
             key: betData.key,
-            date: betData.key.slice(0,9),
+            date: betData.key.slice(0,8),
             wager_team: this.state.wager_team,
             wager: this.state.wager,
-            wager_sign: betData.sign
         }
-        console.log(betModel, this.state.user._id)
+        if (betData.sign === "-") {
+            betModel.payout = parseFloat(betModel.wager) / parseFloat(betData.wagerOdds) * 100
+            betModel.payout = betModel.payout.toFixed(2)
+        }
+        if (betData.sign === "+") {
+            betModel.payout = parseFloat(betModel.wager) * parseFloat(betData.wagerOdds) / 100
+            betModel.payout = betModel.payout.toFixed(2)
+        }
         API.saveBet(betModel, this.state.user._id)
             .then(res=>{
                 console.log('bet added, ' + res.data)
@@ -136,7 +154,7 @@ class Home extends Component {
         }
         return (
             <div>
-                <Navbar />
+                <Navbar logged={this.state.loggedIn}/>
                 <div>
                     <Grid className="demo-grid-1">
                         <Cell col={4}><Button raised colored onClick={this.getTopBets}>Top Bets</Button></Cell>

@@ -12,6 +12,9 @@
     "/auth/user": {
       "target": "http://localhost:3001"
     },
+    "/auth/logout": {
+      "target": "http://localhost:3001"
+    },
     "/api/": {
       "target": "http://localhost:3001"
     }

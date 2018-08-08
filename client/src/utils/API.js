@@ -31,8 +31,9 @@ export default {
         console.log('api get bets for:', id)
         return axios.get("/api/bets/usersBets/" + id)
     },
-    saveSeasonBet: function(team) {
-        return axios.post('/api/bets/seasonBet', team)
+    saveSeasonBet: function(team, id) {
+        console.log(team, id)
+        return axios.post('/api/bets/seasonBet', {team, id})
     },
     getUser: function() {
         return axios.get('/auth/user')
