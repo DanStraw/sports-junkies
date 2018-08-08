@@ -11,7 +11,8 @@ const betSchema = new Schema({
     date: { type: String, required: false },
     wager_team: { type: String, required: false },
     wager: { type: Number, required: false },
-    wager_sign: { type: String, required: false }
+    wager_sign: { type: String, required: false },
+    payout: { type: Number, required: false }
   });
   
   const Bet = mongoose.model("Bet", betSchema);

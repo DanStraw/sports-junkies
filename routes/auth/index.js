@@ -2,7 +2,8 @@ const router = require("express").Router();
 const passport = require('passport')
 
 router.get('/logout', (req, res) => {
-    res.send('logging out')
+    req.logout()
+    res.redirect('/')
 })
 
 router.get('/login', (req, res) => {

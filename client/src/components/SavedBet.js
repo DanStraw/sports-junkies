@@ -11,7 +11,8 @@ const SavedBet = (props) => {
                     <p>Game Day: {props.bet.date}</p>
                     <p>{props.bet.team1} MoneyLine: {props.bet.team1Line}</p>
                     <p>{props.bet.team2} MoneyLine: {props.bet.team2Line}</p>
-                    <p>Your Wager on {props.bet.wager_team}: {props.bet.wager}</p>
+                    <p>Your Wager on {props.bet.wager_team}: ${props.bet.wager}</p>
+                    <p>Possible Winnings: ${props.bet.payout}</p>
                 </CardText>
             </Card>
         )

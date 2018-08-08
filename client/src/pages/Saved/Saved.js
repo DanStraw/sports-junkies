@@ -12,7 +12,7 @@ class Saved extends Component {
         this.state = {
             savedBets: [],
             loggedIn: false,
-            user: null
+            user: null,
         }
         this.getUsersBets = this.getUsersBets.bind(this)
         this._getUser = this._getUser.bind(this)
@@ -24,12 +24,13 @@ class Saved extends Component {
     _getUser() {
         API.getUser()
             .then(res=> {
-                console.log(res)
-                this.setState({loggedIn: true, user: res.data.user })
-                
+                if (res.data.user) {
+                    this.setState({loggedIn: true, user: res.data.user })
+                } else {
+                    this.setState({loggedIn: false, user: null })
+                }
             })
             .then(()=>{
-                console.log(this.state)
                 this.getUsersBets()
             })
             .catch(err=>console.log(err))
@@ -46,9 +47,6 @@ class Saved extends Component {
             .catch(err=> {
                 console.log(err)
             })
-    }
-    componentDidUpdate() {
-        console.log(this.state)
     }
     render() {
         if (!this.state.user) {
@@ -67,7 +65,7 @@ class Saved extends Component {
         else {
             return (
                 <div>
-                    <Navbar />
+                    <Navbar logged={this.state.loggedIn} />
                     <Grid className="demo-grid-1">
                         <Cell col={12}><h2>{this.state.user.firstName}'s Tracked Bets</h2></Cell>
                     </Grid>

@@ -5,12 +5,8 @@ import API from '../../utils/API';
 
 class Login extends Component {
     state = {
-        username: "",
-        password: "",
-        passwordPlaceHolder: '',
-        contact: "",
-        isRegistered:false,
-        message: ''
+        loggedIn: false,
+        user: null,
     }
 
     handleInputChange = event => {
@@ -39,7 +35,7 @@ class Login extends Component {
     render() {
         return (
          <div>
-             <Navbar />
+             <Navbar logged={this.state.loggedIn} />
                 <div>
                     <form className="login-page">
                       <div className="form">
