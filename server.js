@@ -35,15 +35,15 @@ if (process.env.NODE_ENV === "production") {
 	})
 }
 
-app.get('/home',
-function (req, res) {
-  console.log('home')
-});
+// app.get('/home',
+// function (req, res) {
+//   console.log('home')
+// });
 
-app.get('/login',
-  function (req, res) {
-    res.render('/');
-});
+// app.get('/login',
+//   function (req, res) {
+//     res.render('/');
+// });
 
 
 app.use('/auth', authRoutes);
@@ -51,6 +51,10 @@ app.use('/api', apiRoutes);
 
 app.get((req,res,next)=>{
   res.sendStatus(404)
+})
+
+app.get("*", (req,res)=>{
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"))
 })
 
 app.listen(PORT, function() {

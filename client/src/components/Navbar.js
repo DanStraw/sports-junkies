@@ -12,7 +12,7 @@ class Navbar extends Component {
                          <Link to="/home">Home</Link>
                          <Link to="/login">My Tracked Bets</Link>
                          <Link to="/social">Get Informed</Link>
-                         <Link to="/login">login</Link>
+                         <Link to="/login">Login</Link>
                      </Navigation>
                  </Header>
                  <Content />

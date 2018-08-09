@@ -48,7 +48,7 @@ class Home extends Component {
     getTopBets() {
         API.getTrendingBets()
             .then(res=> {
-                this.setState({ bets: res.data, dailyBets: [], seasonOdds: [], header: 'Most Popular Teams' })
+                this.setState({ bets: res.data, dailyBets: [], seasonOdds: [], header: "Current Top Trending Bets" })
             })
             .catch(err=>console.log(err));
     };
@@ -157,7 +157,7 @@ class Home extends Component {
                 <Navbar logged={this.state.loggedIn}/>
                 <div>
                     <Grid className="demo-grid-1">
-                        <Cell col={4}><Button raised colored onClick={this.getTopBets}>Top Bets</Button></Cell>
+                        <Cell col={4}><Button raised colored onClick={this.getTopBets}>Today's Top Trending Bets</Button></Cell>
                         <Cell col={4}>
                             <form>
                                 <label htmlFor="month">Month</label>
